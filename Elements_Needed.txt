@@ -1,0 +1,80 @@
+Motors:
+Drivetrain x6 (NEO)
+Intake x1 (MiniCIM?)
+Processing x2 (NEO x1, ?)
+Turret x1 (Planetary)
+Flywheel x2 (Falcon)
+Hood x1 (Seat motor?)
+Hook x1 (MiniCIM?)
+
+Encoders:
+Drivetrain
+Turret
+Hood
+Flywheel
+
+Pneumatics:
+Shifter
+Sphincter
+Intake
+PTO for climb
+
+Subsystems:
+
+Hardware-based:
+Drivetrain
+Pneumatics
+Shooter
+Intake/Processing
+Climber
+
+Software-based, for simplicity
+Vision (for accessing values from the RPi)
+
+Commands:
+
+Autonomous/Auto Assist:
+Drive straight a given distance at a given angle during autonomous -> AutoDrive
+Turn to a given angle during autonomous -> AutoTurn
+Lock to the vision target with the turret ->
+Fire balls accurately (adjust speed, angle of shot) ->
+Locate and acquire new balls ->
+
+Manual:
+Drive, general ->
+Shift gears ->
+Deploy and retract intake device ->
+Deploy hook for climb ->
+Activate climber winches ->
+
+Manual backup (in case of automatic failure):
+Rotate turret ->
+Fire shots ->
+Operate intake ->
+
+PID Control:
+
+Drivetrain:
+Driving straight
+Turning to an angle
+Driving a distance in high gear
+Driving a distance in low gear
+
+Shooter:
+Adjusting turret angle
+Adjusting hood height
+Adjusting wheel speed
+
+Other subsystems:
+None at this time
+
+Cameras:
+
+Vision Processing:
+Mounted to turret for shots
+Inside 'mouth' for ball detection
+
+Driving:
+Approximate 'front' of robot (probably in the intake)
+On turret?
+For lining up with climb bar?
