@@ -12,8 +12,47 @@ package frc.robot;
  * constants.  This class should not be used for any other purpose.  All constants should be
  * declared globally (i.e. public static).  Do not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
+
 public final class Constants {
+
+    //Spark Max IDs (may range from 1+)
+    public static final int LEFT_MASTER = -1;
+    public static final int LEFT_SLAVE_1 = -1;
+    public static final int LEFT_SLAVE_2 = -1;
+    public static final int RIGHT_MASTER = -1;
+    public static final int RIGHT_SLAVE_1 = -1;
+    public static final int RIGHT_SLAVE_2 = -1;
+    public static final int PROCESSOR_START = -1;
+
+    //Talon SRX and FX IDs (may range from 0+)
+    public static final int TURRET = -1;
+    public static final int HOOD = -1;
+    public static final int SHOOTER_MASTER = -1;
+    public static final int SHOOTER_SLAVE = -1;
+    public static final int INTAKE = -1;
+    public static final int PROCESSOR_END = -1;
+
+    public static class DrivetrainConstants {
+
+
+    }
+
+    public static class ShooterConstants {
+
+
+    }
+
+    public static class PneumaticsConstants {
+
+
+    }
+
+    public static class ProcessorConstants {
+
+
+    }
+
 }
