@@ -7,12 +7,17 @@
 
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.*;
+import static frc.robot.Constants.PneumaticsConstants.*;
+
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Pneumatics extends SubsystemBase {
-  /**
-   * Creates a new ExampleSubsystem.
-   */
+  
+  private Compressor compressor = new Compressor(0);
+
+
   public Pneumatics() {
 
   }
@@ -22,11 +27,24 @@ public class Pneumatics extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void lowerIntake() {
+  public void extendIntake() {
 
   }
 
-  public void raiseIntake() {
+  public void retractIntake() {
     
   }
+
+  public void shiftDown() {
+
+  }
+
+  public void shiftUp() {
+
+  }
+
+  public void engagePTO() {
+
+  }
+  
 }
