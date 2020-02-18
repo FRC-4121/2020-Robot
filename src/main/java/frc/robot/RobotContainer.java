@@ -12,9 +12,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.AutoDrive;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.IntakeAndProcessing;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NetworkTableQuerier;
 import frc.robot.subsystems.Pneumatics;
+import frc.robot.subsystems.Processor;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -28,7 +29,8 @@ public class RobotContainer {
   //Subsystems
   private final Drivetrain drivetrain = new Drivetrain();
   private final Shooter shooter = new Shooter();
-  private final IntakeAndProcessing processor = new IntakeAndProcessing();
+  private final Intake intake = new Intake();
+  private final Processor processor = new Processor();
   private final Pneumatics pneumatics = new Pneumatics();
   private final NetworkTableQuerier ntables = new NetworkTableQuerier();
 
@@ -40,6 +42,7 @@ public class RobotContainer {
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    
     // Configure the button bindings
     configureButtonBindings();
   }

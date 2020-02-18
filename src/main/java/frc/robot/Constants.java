@@ -25,7 +25,7 @@ public final class Constants {
     public static final int RIGHT_MASTER = -1;
     public static final int RIGHT_SLAVE_1 = -1;
     public static final int RIGHT_SLAVE_2 = -1;
-    public static final int PROCESSOR_START = -1;
+    public static final int PROCESSOR_MAIN = -1;
 
     //Talon SRX and FX IDs (may range from 0+)
     public static final int TURRET = -1;
@@ -34,10 +34,15 @@ public final class Constants {
     public static final int SHOOTER_SLAVE = -1;
     public static final int INTAKE = -1;
     public static final int PROCESSOR_END = -1;
+    public static final int HOOK = -1;
 
     public static class DrivetrainConstants {
 
+        public static final boolean kMotorInvert = true;//True -> right side motors are inverted
+        public static final double kLowGearSpeedCap = 1.0;//In case full speed draws excessive power, these are an emergency measure
+        public static final double kHighGearSpeedCap = 1.0;
 
+        public static int DIRECTION_MULTIPLIER = 1;//Controls whether forward on joysticks is forward or backward on robot
     }
 
     public static class ShooterConstants {
