@@ -18,27 +18,51 @@ package frc.robot;
 
 public final class Constants {
 
-    //Spark Max IDs (may range from 1+)
-    public static final int LEFT_MASTER = -1;
-    public static final int LEFT_SLAVE_1 = -1;
-    public static final int LEFT_SLAVE_2 = -1;
-    public static final int RIGHT_MASTER = -1;
-    public static final int RIGHT_SLAVE_1 = -1;
-    public static final int RIGHT_SLAVE_2 = -1;
+    //Spark Max IDs (must be unique, may range from 1+)
+    //With NEOs
+    public static final int LEFT_MASTER_S = -1;
+    public static final int LEFT_SLAVE_1_S = -1;
+    public static final int LEFT_SLAVE_2_S = -1;
+    public static final int RIGHT_MASTER_S = -1;
+    public static final int RIGHT_SLAVE_1_S = -1;
+    public static final int RIGHT_SLAVE_2_S = -1;
     public static final int PROCESSOR_MAIN = -1;
 
-    //Talon SRX and FX IDs (may range from 0+)
-    public static final int TURRET = -1;
-    public static final int HOOD = -1;
-    public static final int SHOOTER_MASTER = -1;
-    public static final int SHOOTER_SLAVE = -1;
+    //Without NEOs
+    public static final int HOOD = -1;//??
+    public static final int HOOK = -1;
+
+    //Talon SRX and FX IDs (must be unique, may range from 0+)
+    public static final int LEFT_MASTER_F = -1;
+    public static final int LEFT_SLAVE_F = -1;
+    public static final int RIGHT_MASTER_F = -1;
+    public static final int RIGHT_SLAVE_F = -1;
     public static final int INTAKE = -1;
     public static final int PROCESSOR_END = -1;
-    public static final int HOOK = -1;
+    public static final int TURRET = -1;
+    public static final int SHOOTER_MASTER = -1;
+    public static final int SHOOTER_SLAVE = -1;
+
+    //Drive control port IDs
+    public static final int XBOX_PORT = 0;
+    public static final int LAUNCHPAD_PORT = 1;
+    public static final int TEST_JOYSTICK_PORT = 2;
+
+    //DigitalInput port IDs
+    public static final int TURRET_ENCODER_1 = 0;
+    public static final int TURRET_ENCODER_2 = 1;
+    public static final int TURRET_LIMIT_SWITCH  = 2;
+    public static final int PROCESSOR_INDEX_1 = 3;
+    public static final int PROCESSOR_INDEX_2 = 4;
+
 
     public static class DrivetrainConstants {
 
         public static final boolean kMotorInvert = true;//True -> right side motors are inverted
+        public static final int kPIDLoopIdxDrive = 0;
+        public static final int kTimeoutMsDrive = 20;
+        public static final double kTalonFXPPR = 2048;
+        public static final double kWheelDiameter = 6.0;
         public static final double kLowGearSpeedCap = 1.0;//In case full speed draws excessive power, these are an emergency measure
         public static final double kHighGearSpeedCap = 1.0;
 
@@ -47,17 +71,60 @@ public final class Constants {
 
     public static class ShooterConstants {
 
+        //PID constants
+        public static final double kP_Shoot = 0;
+        public static final double kI_Shoot = 0;
+        public static final double kD_Shoot = 0; 
+        public static final double kP_Turret = .04;
+        public static final double kI_Turret = 0;
+        public static final double kD_Turret = 0.0;
 
+        public static final int kPIDLoopIdxShoot = 0;
+        public static final int kTimeoutMsShoot = 20;
+
+        public static final double kTalonFXPPR = 2048;
+        public static final double kTurretEncoderPPR = 7;
+
+        //Turret dimensions/other config
+        public static final double kTurretGearReduction = 71;
+        public static final double kTurretSprocketDia = 1;
+        public static final double kTurretDiskDia = 13.75;
+
+        //
+        public static final double kShooterSpeed = 1.0;
+        public static final double kTurretSpeed = .8;
     }
 
     public static class PneumaticsConstants {
 
+        public static final int[] LEFT_SHIFTER = {0, 1};
+        public static final int[] RIGHT_SHIFTER = {2, 3};
+        public static final int[] INTAKE_PNEU = {4, 5};
+        public static final int[] PTO_PNEU = {6, 7};
 
+        public static String GEAR = "Low";
+        public static String INTAKE_STATUS = "Retracted";
+        public static String PTO_STATUS = "Disengaged";
     }
 
     public static class ProcessorConstants {
 
+        //All values experimental
+        public static final double kIntakeSpeed = .80;
+        public static final double kOuttakeSpeed = -1.0;
+        public static final double kProcessorSpeed = 0.75;
+        public static final double kEndProcessorSpeed = 1.0;
+        public static final double kLockSpeed = -.25;
+    }
 
+    public static class ClimberConstants {
+
+        public static final int kClimbEncoderPPR = 2048;
+        public static final double kMaxHookHeight = 84;//inches
+        public static final double kShaftSize = 0.5; //diameter, inches
+        public static final double kClimberGearReduction = 1;
+        public static final double kHookSpeed = 1.0;
+        public static final double kHeightTolerance = 2;//inches
     }
 
 }

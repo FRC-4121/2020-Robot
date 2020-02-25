@@ -7,16 +7,17 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
+import static frc.robot.Constants.*;
+import static frc.robot.Constants.ProcessorConstants.*;
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
+import frc.robot.extraClasses.*;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.AutoDrive;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.NetworkTableQuerier;
-import frc.robot.subsystems.Pneumatics;
-import frc.robot.subsystems.Processor;
-import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -26,6 +27,11 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
   
+  //Driver controllers
+  private final XboxController xbox = new XboxController(XBOX_PORT);
+  private final Joystick launchpad = new Joystick(LAUNCHPAD_PORT);
+  private final Joystick testingJoystick = new Joystick(TEST_JOYSTICK_PORT);  
+
   //Subsystems
   private final Drivetrain drivetrain = new Drivetrain();
   private final Shooter shooter = new Shooter();
@@ -35,7 +41,40 @@ public class RobotContainer {
   private final NetworkTableQuerier ntables = new NetworkTableQuerier();
 
   //Commands
+  //Driving
   private final AutoDrive autoCommand = new AutoDrive(drivetrain);
+  private final DriveWithJoysticks driveCommand = new DriveWithJoysticks(drivetrain, xbox);
+  //Pneumatics
+  private final Shift shift = new Shift(pneumatics);
+  private final OperateArm operateIntakeArm = new OperateArm(pneumatics);
+  private final OperatePTO operatePTO = new OperatePTO(pneumatics);
+  //Intake
+  private final RunIntake in = new RunIntake(intake, kIntakeSpeed);
+  private final RunIntake out = new RunIntake(intake, kOuttakeSpeed);
+  //Processor
+  private final RunProcessor runProcessor = new RunProcessor(processor, false);
+  private final RunProcessor invertProcessor = new RunProcessor(processor, true);
+  //Shooter
+
+  //Climber
+
+
+  //Buttons
+  //Driving
+  private JoystickButton invertDirectionButton = new JoystickButton(xbox, 6);
+  //Pneumatics
+  private JoystickButton shiftButton = new JoystickButton(xbox, 5);
+  private JoystickButton intakeArmButton = new JoystickButton(testingJoystick, 1);
+  private JoystickButton PTOButton = new JoystickButton(testingJoystick, 2);
+  //Intake
+  private JoystickButton inButton = new JoystickButton(testingJoystick, 3);
+  private JoystickButton outButton = new JoystickButton(testingJoystick, 4);
+  //Processor
+  private JoystickButton runProcButton = new JoystickButton(testingJoystick, 5);
+  private JoystickButton invertProcessorButton = new JoystickButton(testingJoystick, 6);
+  //Shooter
+
+  //Climber
 
 
   /**
@@ -43,8 +82,18 @@ public class RobotContainer {
    */
   public RobotContainer() {
     
+    //Configure default commands
+    configureDefaultCommands();
+
     // Configure the button bindings
     configureButtonBindings();
+  }
+
+  //For subsystem default commands (driving, etc.)
+  private void configureDefaultCommands(){
+
+    //Drivetrain -> drive with xbox joysticks
+    drivetrain.setDefaultCommand(driveCommand);
   }
 
   /**
@@ -54,8 +103,28 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-  }
 
+    //Driving
+    invertDirectionButton.whenPressed(new InstantCommand(drivetrain::invertDirection, drivetrain));
+    //Pneumatics
+    shiftButton.whenPressed(shift);
+    intakeArmButton.whenPressed(operateIntakeArm);
+    PTOButton.whenPressed(operatePTO);
+    //Intake
+    inButton.whileHeld(in);
+    outButton.whileHeld(out);
+    inButton.whenReleased(new InstantCommand(intake::stopIntake, intake));
+    outButton.whenReleased(new InstantCommand(intake::stopIntake, intake));
+    //Processor
+    runProcButton.whileHeld(runProcessor);
+    invertProcessorButton.whileHeld(invertProcessor);
+    runProcButton.whenReleased(new InstantCommand(processor::stopProcessor, processor));
+    invertProcessorButton.whenReleased(new InstantCommand(processor::stopProcessor, processor));
+    //Shooter
+
+    //Climber
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

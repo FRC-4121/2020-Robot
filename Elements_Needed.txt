@@ -1,21 +1,21 @@
 Motors:
-Drivetrain x6 (NEO)
-Intake x1 (MiniCIM?)
-Processing x2 (NEO x1, ?)
+Drivetrain x6 (NEO), will upgrade to x4 (Falcon)
+Intake x1 (Redline or similar)
+Processing x2 (NEO x1, Redline or similar x1)
 Turret x1 (Planetary)
 Flywheel x2 (Falcon)
-Hood x1 (Seat motor?)
-Hook x1 (MiniCIM?)
+Hood x1 (Tiny motor :) )
+Hook x1 (Redline or similar)
 
 Encoders:
 Drivetrain
 Turret
 Hood
 Flywheel
+Hook
 
 Pneumatics:
 Shifter
-Sphincter
 Intake
 PTO for climb
 
