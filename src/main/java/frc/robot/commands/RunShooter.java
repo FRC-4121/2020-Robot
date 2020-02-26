@@ -7,23 +7,20 @@
 
 package frc.robot.commands;
 
-import static frc.robot.Constants.ClimberConstants.*;
+import static frc.robot.Constants.ShooterConstants.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Shooter;
 
-public class RunHook extends CommandBase {
+public class RunShooter extends CommandBase {
   
-  private Climber climber;
-  private double motorSpeed;
+  private Shooter shooter;
   
-  public RunHook(Climber climb, double speed) {
+  public RunShooter(Shooter shoot) {
 
-    climber = climb;
-    motorSpeed = speed;
-
+    shooter = shoot;
+    addRequirements(shooter);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
@@ -35,28 +32,7 @@ public class RunHook extends CommandBase {
   @Override
   public void execute() {
 
-    //If we are raising the hook... (this comparision may need to be changed based on mech)
-    if(motorSpeed > 0) {
-      //If the climber is at the max height, stop
-      if(Math.abs(climber.getHeight() - kMaxHookHeight) < kHeightTolerance)
-        
-        climber.runHook(0);
-
-      else //otherwise run normally
-
-        climber.runHook(motorSpeed);
-    }
-    else //if we are lowering the hook
-    {
-      //If the climber is near the bottom, stop
-      if(Math.abs(climber.getHeight() - 0) < kHeightTolerance)
-        
-        climber.runHook(0);
-
-      else //otherwise run normally
-
-        climber.runHook(motorSpeed);
-    }
+    shooter.shoot(kShooterSpeed);
   }
 
   // Called once the command ends or is interrupted.

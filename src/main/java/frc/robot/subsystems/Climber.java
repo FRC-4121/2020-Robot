@@ -11,7 +11,6 @@ import static frc.robot.Constants.*;
 import static frc.robot.Constants.ClimberConstants.*;
 
 import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -41,8 +40,15 @@ public class Climber extends SubsystemBase {
     hookMotor.set(speed);
   }
 
+  public void stopHook(){
+
+    hookMotor.set(0);
+  }
+
   public double getHeight(){
 
     return hookEncoder.getPosition() * Math.PI * kShaftSize / (kClimberGearReduction * kClimbEncoderPPR);
   }
+
+  //May be worthwhile to implement motion magic/PID, a la 2018 elevator
 }

@@ -34,7 +34,7 @@ public class RunProcessor extends CommandBase {
   public void execute() {
 
     processor.runProcessor(invert);
-    processor.lockProcessor();
+    processor.unlockProcessor();
   }
 
   // Called once the command ends or is interrupted.

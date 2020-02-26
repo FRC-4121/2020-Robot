@@ -7,23 +7,24 @@
 
 package frc.robot.commands;
 
-import static frc.robot.Constants.ClimberConstants.*;
+import static frc.robot.Constants.ShooterConstants.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Shooter;
 
-public class RunHook extends CommandBase {
-  
-  private Climber climber;
-  private double motorSpeed;
-  
-  public RunHook(Climber climb, double speed) {
+public class RunTurret extends CommandBase {
+ 
+  private Shooter shooter;
+  private double speed;
 
-    climber = climb;
-    motorSpeed = speed;
+
+  public RunTurret(Shooter shoot, double turretSpeed) {
+
+    shooter = shoot;
+    speed = turretSpeed;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -35,28 +36,7 @@ public class RunHook extends CommandBase {
   @Override
   public void execute() {
 
-    //If we are raising the hook... (this comparision may need to be changed based on mech)
-    if(motorSpeed > 0) {
-      //If the climber is at the max height, stop
-      if(Math.abs(climber.getHeight() - kMaxHookHeight) < kHeightTolerance)
-        
-        climber.runHook(0);
-
-      else //otherwise run normally
-
-        climber.runHook(motorSpeed);
-    }
-    else //if we are lowering the hook
-    {
-      //If the climber is near the bottom, stop
-      if(Math.abs(climber.getHeight() - 0) < kHeightTolerance)
-        
-        climber.runHook(0);
-
-      else //otherwise run normally
-
-        climber.runHook(motorSpeed);
-    }
+    shooter.rotateTurret(speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -67,6 +47,9 @@ public class RunHook extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+
+    if(!shooter.getTurretLimit() || (shooter.getTurretAngle() > kTurretMaxAngle))
+      return true;
     return false;
   }
 }

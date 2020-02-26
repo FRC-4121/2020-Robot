@@ -85,7 +85,7 @@ public class Drivetrain extends SubsystemBase {
     rightMasterSpark = new CANSparkMax(RIGHT_MASTER_S, MotorType.kBrushless);
     rightSlave1Spark = new CANSparkMax(RIGHT_SLAVE_1_S, MotorType.kBrushless);
     rightSlave2Spark = new CANSparkMax(RIGHT_SLAVE_2_S, MotorType.kBrushless);
-    leftMotorGroup = new SpeedControllerGroup(rightMasterSpark, rightSlave1Spark, rightSlave2Spark);
+    rightMotorGroup = new SpeedControllerGroup(rightMasterSpark, rightSlave1Spark, rightSlave2Spark);
 
     drivetrain = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
 
@@ -112,12 +112,12 @@ public class Drivetrain extends SubsystemBase {
     rightSlave2Encoder = rightSlave2Spark.getEncoder();
 
     //Config encoders
-    leftMasterEncoder.setInverted(!kMotorInvert);
-    leftSlave1Encoder.setInverted(!kMotorInvert);
-    leftSlave2Encoder.setInverted(!kMotorInvert);
-    rightMasterEncoder.setInverted(kMotorInvert);
-    rightSlave1Encoder.setInverted(kMotorInvert);
-    rightSlave2Encoder.setInverted(kMotorInvert);
+    // leftMasterEncoder.setInverted(!kMotorInvert);
+    // leftSlave1Encoder.setInverted(!kMotorInvert);
+    // leftSlave2Encoder.setInverted(!kMotorInvert);
+    // rightMasterEncoder.setInverted(kMotorInvert);
+    // rightSlave1Encoder.setInverted(kMotorInvert);
+    // rightSlave2Encoder.setInverted(kMotorInvert);
 
     //Tell code what drivetype is used
     sparkDrive = true;

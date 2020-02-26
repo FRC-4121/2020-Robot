@@ -9,9 +9,10 @@ package frc.robot;
 
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.ProcessorConstants.*;
+import static frc.robot.Constants.ClimberConstants.*;
+import static frc.robot.Constants.ShooterConstants.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
-import frc.robot.extraClasses.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final Intake intake = new Intake();
   private final Processor processor = new Processor();
+  private final Climber climber = new Climber();
   private final Pneumatics pneumatics = new Pneumatics();
   private final NetworkTableQuerier ntables = new NetworkTableQuerier();
 
@@ -55,9 +57,12 @@ public class RobotContainer {
   private final RunProcessor runProcessor = new RunProcessor(processor, false);
   private final RunProcessor invertProcessor = new RunProcessor(processor, true);
   //Shooter
-
+  private final RunTurret clockwise = new RunTurret(shooter, kTurretSpeed);
+  private final RunTurret counterclockwise = new RunTurret(shooter, -kTurretSpeed);
+  private final RunShooter shoot = new RunShooter(shooter);
   //Climber
-
+  private final RunHook raiseHook = new RunHook(climber, kHookSpeed);
+  private final RunHook lowerHook = new RunHook(climber, -kHookSpeed);
 
   //Buttons
   //Driving
@@ -73,8 +78,13 @@ public class RobotContainer {
   private JoystickButton runProcButton = new JoystickButton(testingJoystick, 5);
   private JoystickButton invertProcessorButton = new JoystickButton(testingJoystick, 6);
   //Shooter
+  private JoystickButton clockwiseTurretButton = new JoystickButton(testingJoystick, 9);
+  private JoystickButton counterclockTurretButton = new JoystickButton(testingJoystick, 10);
+  private JoystickButton shootButton = new JoystickButton(testingJoystick, 11);
 
   //Climber
+  private JoystickButton raiseHookButton = new JoystickButton(testingJoystick, 7);
+  private JoystickButton lowerHookButton = new JoystickButton(testingJoystick, 8);
 
 
   /**
@@ -121,8 +131,17 @@ public class RobotContainer {
     runProcButton.whenReleased(new InstantCommand(processor::stopProcessor, processor));
     invertProcessorButton.whenReleased(new InstantCommand(processor::stopProcessor, processor));
     //Shooter
-
+    clockwiseTurretButton.whileHeld(clockwise);
+    counterclockTurretButton.whileHeld(counterclockwise);
+    clockwiseTurretButton.whenReleased(new InstantCommand(shooter::stopTurret, shooter));
+    counterclockTurretButton.whenReleased(new InstantCommand(shooter::stopTurret, shooter));
+    shootButton.whileHeld(shoot);
+    shootButton.whenReleased(new InstantCommand(shooter::stopShooter, shooter));
     //Climber
+    raiseHookButton.whileHeld(raiseHook);
+    lowerHookButton.whileHeld(lowerHook);
+    raiseHookButton.whenReleased(new InstantCommand(climber::stopHook, climber));
+    lowerHookButton.whenReleased(new InstantCommand(climber::stopHook, climber));
 
   }
 

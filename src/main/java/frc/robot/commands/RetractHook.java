@@ -13,7 +13,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
-public class DeployHook extends CommandBase {
+//In progress
+public class RetractHook extends CommandBase {
   
   private Climber climber;
   private double startHeight;
@@ -23,12 +24,11 @@ public class DeployHook extends CommandBase {
 
   private Timer timer;
   
-  //In progress 'auto hook' commands
-  public DeployHook(Climber climb, double height, double time) {
+  public RetractHook(Climber climb, double time) {
 
     climber = climb;
-    targetHeight = height;
     stopTime = time;
+    targetHeight = 0;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(climber);
@@ -48,7 +48,7 @@ public class DeployHook extends CommandBase {
   @Override
   public void execute() {
 
-    climber.runHook(kHookSpeed);
+    climber.runHook(-kHookSpeed);
   }
 
   // Called once the command ends or is interrupted.
