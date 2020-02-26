@@ -19,8 +19,9 @@ public class RunShooter extends CommandBase {
   public RunShooter(Shooter shoot) {
 
     shooter = shoot;
-    addRequirements(shooter);
+    
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.

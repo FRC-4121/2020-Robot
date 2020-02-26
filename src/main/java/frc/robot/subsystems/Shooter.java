@@ -35,6 +35,12 @@ public class Shooter extends SubsystemBase {
   private final PIDControl turretAnglePID = new PIDControl(kP_Turret, kI_Turret, kD_Turret);
 
   private boolean resetEncoder = false;
+
+  //for testing
+  private double save_p = kP_Shoot;
+  private double save_i = kI_Shoot;
+  private double save_d = kD_Shoot;
+  private double save_f = kF_Shoot;
  
 
   public Shooter() {
@@ -47,11 +53,17 @@ public class Shooter extends SubsystemBase {
     shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, kPIDLoopIdxShoot, kTimeoutMsShoot);
     
     //Config speed PID
-    //shooterMaster.conf
-    
 		shooterMaster.config_kP(kPIDLoopIdxShoot, kP_Shoot, kTimeoutMsShoot);
 		shooterMaster.config_kI(kPIDLoopIdxShoot, kI_Shoot, kTimeoutMsShoot);
-		shooterMaster.config_kD(kPIDLoopIdxShoot, kD_Shoot, kTimeoutMsShoot);
+    shooterMaster.config_kD(kPIDLoopIdxShoot, kD_Shoot, kTimeoutMsShoot);
+    shooterMaster.config_kF(kPIDLoopIdxShoot, kF_Shoot, kTimeoutMsShoot);
+    
+    //for testing, we put PID tuning in the smart dash
+    SmartDashboard.putNumber("P Shoot", kP_Shoot);
+    SmartDashboard.putNumber("I Shoot", kI_Shoot);
+    SmartDashboard.putNumber("D Shoot", kD_Shoot);
+    SmartDashboard.putNumber("F Shoot", kF_Shoot);
+    SmartDashboard.putNumber("Speed", 0);
 
     //Configured to calculate the angle around the turret from the limit switch
     //theta (radians) = arclength / radius
@@ -65,7 +77,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putBoolean("Turret Limit", turretLimit.get()); 
     SmartDashboard.putNumber("Shooter RPM", getShooterRPM());
     SmartDashboard.putNumber("Shooter Speed", getShooterSpeed());
-
+    
     if (turretLimit.get() == false)
     {
       //...and the reset flag is false...
@@ -80,11 +92,38 @@ public class Shooter extends SubsystemBase {
     {
       resetEncoder = false;
     }
+
+    //For testing we grab the PID from the smart dash
+    double p = SmartDashboard.getNumber("P Shoot", save_p);
+    double i = SmartDashboard.getNumber("I Shoot", save_i);
+    double d = SmartDashboard.getNumber("D Shoot", save_d);
+    double f = SmartDashboard.getNumber("F Shoot", save_f);
+    double speed = SmartDashboard.getNumber("Speed", kShooterSpeed);
+    
+    if(p != save_p) {
+      shooterMaster.config_kP(kPIDLoopIdxShoot, p, kTimeoutMsShoot);
+      save_p = p;
+    }
+    if(i != save_i) {
+      shooterMaster.config_kI(kPIDLoopIdxShoot, i, kTimeoutMsShoot);
+      save_i = i;
+    }
+    if(d != save_d) {
+      shooterMaster.config_kD(kPIDLoopIdxShoot, d, kTimeoutMsShoot);
+      save_d = d;
+    }
+    if(f != save_f) {
+      shooterMaster.config_kF(kPIDLoopIdxShoot, f, kTimeoutMsShoot);
+      save_f = f;
+    }
+
+    //Warning - this will run all the time!!!
+    shooterMaster.set(ControlMode.Velocity, speed);
   }
 
   public void shoot(double speed){
 
-    shooterMaster.set(speed);
+    shooterMaster.set(ControlMode.Velocity, speed);
   }
 
   public void rotateTurret(double speed){
