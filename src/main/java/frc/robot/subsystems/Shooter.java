@@ -41,6 +41,7 @@ public class Shooter extends SubsystemBase {
   private double save_i = kI_Shoot;
   private double save_d = kD_Shoot;
   private double save_f = kF_Shoot;
+  private double speed;
  
 
   public Shooter() {
@@ -98,7 +99,7 @@ public class Shooter extends SubsystemBase {
     double i = SmartDashboard.getNumber("I Shoot", save_i);
     double d = SmartDashboard.getNumber("D Shoot", save_d);
     double f = SmartDashboard.getNumber("F Shoot", save_f);
-    double speed = SmartDashboard.getNumber("Speed", kShooterSpeed);
+    speed = SmartDashboard.getNumber("Speed", kShooterSpeed);
     
     if(p != save_p) {
       shooterMaster.config_kP(kPIDLoopIdxShoot, p, kTimeoutMsShoot);
@@ -158,7 +159,7 @@ public class Shooter extends SubsystemBase {
 
   public double getShooterSpeed(){
 
-    return shooterMaster.get();
+    return speed;
   }
 
 }

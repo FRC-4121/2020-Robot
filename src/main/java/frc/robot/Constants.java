@@ -82,6 +82,7 @@ public final class Constants {
 
         public static final int kPIDLoopIdxShoot = 0;
         public static final int kTimeoutMsShoot = 20;
+        public static final int kShooterMaxRPM = 6380;
 
         public static final double kTalonFXPPR = 2048;
         public static final double kTurretEncoderPPR = 7;
@@ -100,9 +101,9 @@ public final class Constants {
 
     public static class PneumaticsConstants {
 
-        public static final int[] LEFT_SHIFTER = {0, 1};
-        public static final int[] RIGHT_SHIFTER = {2, 3};
-        public static final int[] INTAKE_PNEU = {4, 5};
+        public static final int[] LEFT_SHIFTER = {1, 4};
+        public static final int[] RIGHT_SHIFTER = {2, 5};
+        public static final int[] INTAKE_PNEU = {0, 3};
         public static final int[] PTO_PNEU = {6, 7};
 
         public static String GEAR = "Low";
@@ -113,10 +114,10 @@ public final class Constants {
     public static class ProcessorConstants {
 
         //All values experimental
-        public static final double kIntakeSpeed = .80;
-        public static final double kOuttakeSpeed = -1.0;
-        public static final double kProcessorSpeed = 0.75;
-        public static final double kEndProcessorSpeed = 1.0;
+        public static final double kIntakeSpeed = -.60;
+        public static final double kOuttakeSpeed = 1.0;
+        public static final double kProcessorSpeed = -0.4;
+        public static final double kUnlockSpeed = 1.0;
         public static final double kLockSpeed = -.25;
     }
 

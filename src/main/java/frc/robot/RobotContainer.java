@@ -36,7 +36,7 @@ public class RobotContainer {
   //Subsystems
   private final Drivetrain drivetrain = new Drivetrain();
   private final Shooter shooter = new Shooter();
-  private final Intake intake = new Intake();
+  //private final Intake intake = new Intake();
   private final Processor processor = new Processor();
   private final Climber climber = new Climber();
   private final Pneumatics pneumatics = new Pneumatics();
@@ -51,15 +51,15 @@ public class RobotContainer {
   private final OperateArm operateIntakeArm = new OperateArm(pneumatics);
   private final OperatePTO operatePTO = new OperatePTO(pneumatics);
   //Intake
-  private final RunIntake in = new RunIntake(intake, kIntakeSpeed);
-  private final RunIntake out = new RunIntake(intake, kOuttakeSpeed);
+  //private final RunIntake in = new RunIntake(intake, kIntakeSpeed);
+  //private final RunIntake out = new RunIntake(intake, kOuttakeSpeed);
   //Processor
   private final RunProcessor runProcessor = new RunProcessor(processor, false);
   private final RunProcessor invertProcessor = new RunProcessor(processor, true);
   //Shooter
   private final RunTurret clockwise = new RunTurret(shooter, kTurretSpeed);
   private final RunTurret counterclockwise = new RunTurret(shooter, -kTurretSpeed);
-  private final RunShooter shoot = new RunShooter(shooter);
+  private final RunShooter shoot = new RunShooter(shooter, processor);
   //Climber
   private final RunHook raiseHook = new RunHook(climber, kHookSpeed);
   private final RunHook lowerHook = new RunHook(climber, -kHookSpeed);
@@ -77,6 +77,9 @@ public class RobotContainer {
   //Processor
   private JoystickButton runProcButton = new JoystickButton(testingJoystick, 5);
   private JoystickButton invertProcessorButton = new JoystickButton(testingJoystick, 6);
+  private JoystickButton processorButton;
+  private JoystickButton intakeButton;
+  private JoystickButton stopProcessorButton;
   //Shooter
   private JoystickButton clockwiseTurretButton = new JoystickButton(testingJoystick, 9);
   private JoystickButton counterclockTurretButton = new JoystickButton(testingJoystick, 10);
@@ -121,10 +124,10 @@ public class RobotContainer {
     intakeArmButton.whenPressed(operateIntakeArm);
     PTOButton.whenPressed(operatePTO);
     //Intake
-    inButton.whileHeld(in);
-    outButton.whileHeld(out);
-    inButton.whenReleased(new InstantCommand(intake::stopIntake, intake));
-    outButton.whenReleased(new InstantCommand(intake::stopIntake, intake));
+    // inButton.whileHeld(in);
+    // outButton.whileHeld(out);
+    // inButton.whenReleased(new InstantCommand(intake::stopIntake, intake));
+    // outButton.whenReleased(new InstantCommand(intake::stopIntake, intake));
     //Processor
     runProcButton.whileHeld(runProcessor);
     invertProcessorButton.whileHeld(invertProcessor);
