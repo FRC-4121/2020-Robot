@@ -40,22 +40,22 @@ public class RunHook extends CommandBase {
       //If the climber is at the max height, stop
       if(Math.abs(climber.getHeight() - kMaxHookHeight) < kHeightTolerance)
         
-        climber.runHook(0);
+        climber.stopHook();
 
       else //otherwise run normally
 
-        climber.runHook(motorSpeed);
+        climber.runHook();
     }
     else //if we are lowering the hook
     {
       //If the climber is near the bottom, stop
       if(Math.abs(climber.getHeight() - 0) < kHeightTolerance)
         
-        climber.runHook(0);
+        climber.stopHook();
 
       else //otherwise run normally
 
-        climber.runHook(motorSpeed);
+        climber.runHook();
     }
   }
 

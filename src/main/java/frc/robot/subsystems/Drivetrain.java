@@ -62,7 +62,11 @@ public class Drivetrain extends SubsystemBase {
     //initFalconDrivetrain();
 
     gyro = new ADXRS450_Gyro();
+    SmartDashboard.putNumber("Zero Gyro", 0);
     zeroGyro();
+
+    SmartDashboard.putNumber("Zero Encoders", 0);
+    zeroEncoders();
   }
 
   @Override
@@ -71,6 +75,22 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Gyro", getGyroAngle());
     SmartDashboard.putNumber("Left Master Encoder", getMasterLeftEncoder());
     SmartDashboard.putNumber("Right Master Encoder", getMasterRightEncoder());
+
+    double zeroGyro = SmartDashboard.getNumber("Zero Gyro", 0);
+    if (zeroGyro == 1)
+    {
+      SmartDashboard.putNumber("Zero Gyro", 0);
+      zeroGyro();
+    }
+
+    double zeroEncoders = SmartDashboard.getNumber("Zero Encoders", 0);
+    if (zeroEncoders == 1)
+    {
+      SmartDashboard.putNumber("Zero Encoders", 0);
+      zeroEncoders();
+    }
+
+
   }
 
   //Config functions
@@ -154,6 +174,12 @@ public class Drivetrain extends SubsystemBase {
     leftSlaveFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, kPIDLoopIdxDrive, kTimeoutMsDrive);
     rightMasterFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, kPIDLoopIdxDrive, kTimeoutMsDrive);
     rightSlaveFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, kPIDLoopIdxDrive, kTimeoutMsDrive);
+
+    //Invert appropriately
+    leftMasterFalcon.setInverted(!kMotorInvert);
+    leftSlaveFalcon.setInverted(!kMotorInvert);
+    rightMasterFalcon.setInverted(kMotorInvert);
+    rightSlaveFalcon.setInverted(kMotorInvert);
 
     //Tell code what drivetype is used
     sparkDrive = false;

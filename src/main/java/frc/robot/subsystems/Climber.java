@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.ClimberConstants.*;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -20,12 +21,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //In progress -> currently testing in 2020-Playground
 public class Climber extends SubsystemBase {
   
-  private CANSparkMax hookMotor = new CANSparkMax(HOOK, MotorType.kBrushed);
-  private CANEncoder hookEncoder = hookMotor.getEncoder();
+  //private CANSparkMax hookMotor = new CANSparkMax(HOOK, MotorType.kBrushed);
+  //private CANEncoder hookEncoder = hookMotor.getEncoder();
+  private WPI_TalonSRX hookMotor = new WPI_TalonSRX(HOOK);
   
   public Climber() {
 
-    hookEncoder.setPosition(0);
+    //hookEncoder.setPosition(0);
 
   }
 
@@ -35,9 +37,13 @@ public class Climber extends SubsystemBase {
     SmartDashboard.putNumber("Hook Height", getHeight());
   }
 
-  public void runHook(double speed){
+  public void runHook(){
   
-    hookMotor.set(speed);
+    hookMotor.set(kHookSpeed);
+  }
+
+  public void downHook(){
+    hookMotor.set(-kHookSpeed);
   }
 
   public void stopHook(){
@@ -46,8 +52,8 @@ public class Climber extends SubsystemBase {
   }
 
   public double getHeight(){
-
-    return hookEncoder.getPosition() * Math.PI * kShaftSize / (kClimberGearReduction * kClimbEncoderPPR);
+    return 0;
+    //return hookEncoder.getPosition() * Math.PI * kShaftSize / (kClimberGearReduction * kClimbEncoderPPR);
   }
 
   //May be worthwhile to implement motion magic/PID, a la 2018 elevator

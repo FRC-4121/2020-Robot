@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Pneumatics extends SubsystemBase {
   
-  private Compressor compressor = new Compressor(0);
+  //private Compressor compressor = new Compressor(0);
 
   private DoubleSolenoid leftShifter = new DoubleSolenoid(LEFT_SHIFTER[0], LEFT_SHIFTER[1]);
   private DoubleSolenoid rightShifter = new DoubleSolenoid(RIGHT_SHIFTER[0], RIGHT_SHIFTER[1]);
@@ -43,13 +43,13 @@ public class Pneumatics extends SubsystemBase {
 
   public void extendIntake() {
     
-    intakePneu.set(Value.kForward);//will require testing of solenoid to confirm
+    intakePneu.set(Value.kReverse);//will require testing of solenoid to confirm
     INTAKE_STATUS = "Extended";
   }
 
   public void retractIntake() {
 
-    intakePneu.set(Value.kReverse);//will require testing of solenoid to confirm
+    intakePneu.set(Value.kForward);//will require testing of solenoid to confirm
     INTAKE_STATUS = "Retracted";
   }
 

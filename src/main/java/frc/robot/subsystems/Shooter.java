@@ -41,30 +41,36 @@ public class Shooter extends SubsystemBase {
   private double save_i = kI_Shoot;
   private double save_d = kD_Shoot;
   private double save_f = kF_Shoot;
-  private double speed;
+  private double speed = 0;
  
 
   public Shooter() {
 
-    //Configure slave
-    shooterSlave.follow(shooterMaster);
-    shooterSlave.setInverted(InvertType.OpposeMaster);
+    //Configure slave (Falcons currently unsupported)
+    //shooterSlave.follow(shooterMaster);
+    //shooterSlave.setInverted(InvertType.OpposeMaster);
 
     //Set up encoder for speed control
     shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, kPIDLoopIdxShoot, kTimeoutMsShoot);
+    shooterSlave.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, kPIDLoopIdxShoot, kTimeoutMsShoot);
     
     //Config speed PID
 		shooterMaster.config_kP(kPIDLoopIdxShoot, kP_Shoot, kTimeoutMsShoot);
 		shooterMaster.config_kI(kPIDLoopIdxShoot, kI_Shoot, kTimeoutMsShoot);
     shooterMaster.config_kD(kPIDLoopIdxShoot, kD_Shoot, kTimeoutMsShoot);
     shooterMaster.config_kF(kPIDLoopIdxShoot, kF_Shoot, kTimeoutMsShoot);
+
+    shooterSlave.config_kP(kPIDLoopIdxShoot, kP_Shoot, kTimeoutMsShoot);
+		shooterSlave.config_kI(kPIDLoopIdxShoot, kI_Shoot, kTimeoutMsShoot);
+    shooterSlave.config_kD(kPIDLoopIdxShoot, kD_Shoot, kTimeoutMsShoot);
+    shooterSlave.config_kF(kPIDLoopIdxShoot, kF_Shoot, kTimeoutMsShoot);
     
     //for testing, we put PID tuning in the smart dash
     SmartDashboard.putNumber("P Shoot", kP_Shoot);
     SmartDashboard.putNumber("I Shoot", kI_Shoot);
     SmartDashboard.putNumber("D Shoot", kD_Shoot);
     SmartDashboard.putNumber("F Shoot", kF_Shoot);
-    SmartDashboard.putNumber("Speed", 0);
+    SmartDashboard.putNumber("Speed", speed);
 
     //Configured to calculate the angle around the turret from the limit switch
     //theta (radians) = arclength / radius
@@ -103,28 +109,35 @@ public class Shooter extends SubsystemBase {
     
     if(p != save_p) {
       shooterMaster.config_kP(kPIDLoopIdxShoot, p, kTimeoutMsShoot);
+      shooterSlave.config_kP(kPIDLoopIdxShoot, p, kTimeoutMsShoot);
       save_p = p;
     }
     if(i != save_i) {
       shooterMaster.config_kI(kPIDLoopIdxShoot, i, kTimeoutMsShoot);
+      shooterSlave.config_kI(kPIDLoopIdxShoot, i, kTimeoutMsShoot);
       save_i = i;
     }
     if(d != save_d) {
       shooterMaster.config_kD(kPIDLoopIdxShoot, d, kTimeoutMsShoot);
+      shooterSlave.config_kD(kPIDLoopIdxShoot, d, kTimeoutMsShoot);
       save_d = d;
     }
     if(f != save_f) {
       shooterMaster.config_kF(kPIDLoopIdxShoot, f, kTimeoutMsShoot);
+      shooterSlave.config_kF(kPIDLoopIdxShoot, f, kTimeoutMsShoot);
       save_f = f;
     }
 
     //Warning - this will run all the time!!!
-    shooterMaster.set(ControlMode.Velocity, speed);
+    //shooterMaster.set(ControlMode.Velocity, speed * 1023);
+    //shooterSlave.set(ControlMode.Velocity, -speed * 1023);
   }
 
-  public void shoot(double speed){
-
-    shooterMaster.set(ControlMode.Velocity, speed);
+  public void shoot(double speed1){
+    speed = speed1; 
+    shooterMaster.set(speed);
+    shooterSlave.set(-speed);
+    
   }
 
   public void rotateTurret(double speed){
@@ -140,6 +153,7 @@ public class Shooter extends SubsystemBase {
   public void stopShooter(){
 
     shooterMaster.set(0);
+    shooterSlave.set(0);
   }
 
   public boolean getTurretLimit(){

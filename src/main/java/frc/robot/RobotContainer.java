@@ -59,7 +59,7 @@ public class RobotContainer {
   //Shooter
   private final RunTurret clockwise = new RunTurret(shooter, kTurretSpeed);
   private final RunTurret counterclockwise = new RunTurret(shooter, -kTurretSpeed);
-  private final RunShooter shoot = new RunShooter(shooter, processor);
+  private final RunShooter shoot = new RunShooter(shooter, processor, testingJoystick);
   //Climber
   private final RunHook raiseHook = new RunHook(climber, kHookSpeed);
   private final RunHook lowerHook = new RunHook(climber, -kHookSpeed);
@@ -107,6 +107,8 @@ public class RobotContainer {
 
     //Drivetrain -> drive with xbox joysticks
     drivetrain.setDefaultCommand(driveCommand);
+
+    shooter.setDefaultCommand(shoot);
   }
 
   /**
@@ -138,11 +140,11 @@ public class RobotContainer {
     counterclockTurretButton.whileHeld(counterclockwise);
     clockwiseTurretButton.whenReleased(new InstantCommand(shooter::stopTurret, shooter));
     counterclockTurretButton.whenReleased(new InstantCommand(shooter::stopTurret, shooter));
-    shootButton.whileHeld(shoot);
-    shootButton.whenReleased(new InstantCommand(shooter::stopShooter, shooter));
+    shootButton.whileHeld(new InstantCommand(processor::unlockProcessor, processor));
+    shootButton.whenReleased(new InstantCommand(processor::stopProcessor, processor));
     //Climber
-    raiseHookButton.whileHeld(raiseHook);
-    lowerHookButton.whileHeld(lowerHook);
+    raiseHookButton.whileHeld(new InstantCommand(climber::runHook, climber));
+    lowerHookButton.whileHeld(new InstantCommand(climber::downHook, climber));
     raiseHookButton.whenReleased(new InstantCommand(climber::stopHook, climber));
     lowerHookButton.whenReleased(new InstantCommand(climber::stopHook, climber));
 

@@ -37,9 +37,9 @@ public class Ballistics {
     public int distanceIncrement = 1;//not recommended to change this value
     
     //Can be configured for a 'continuous' angle or a two-angle system
-    public int minAngle = 45;//in degrees
-    public int maxAngle = 45;//in degrees
-    public int angleIncrement = 1;//make sure this is a factor of the difference between min and max angle
+    public int minAngle = 55;//in degrees
+    public int maxAngle = 55;//in degrees
+    public int angleIncrement = 1;//make sure this is a factor of the difference between min and max angle, unless you are only using one angle, then make it 1
     
     public int minSpeed = 70;//percent
     public int maxSpeed = 100;//percent

@@ -48,7 +48,7 @@ public class RetractHook extends CommandBase {
   @Override
   public void execute() {
 
-    climber.runHook(-kHookSpeed);
+    climber.downHook();
   }
 
   // Called once the command ends or is interrupted.

@@ -48,7 +48,7 @@ public class DeployHook extends CommandBase {
   @Override
   public void execute() {
 
-    climber.runHook(kHookSpeed);
+    climber.runHook();
   }
 
   // Called once the command ends or is interrupted.

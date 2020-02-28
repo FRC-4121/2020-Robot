@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import static frc.robot.Constants.ShooterConstants.*;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Processor;
 import frc.robot.subsystems.Shooter;
@@ -17,11 +18,13 @@ public class RunShooter extends CommandBase {
   
   private Shooter shooter;
   private Processor processor;
+  private Joystick joystick;
   
-  public RunShooter(Shooter shoot, Processor process) {
+  public RunShooter(Shooter shoot, Processor process, Joystick joy) {
 
     shooter = shoot;
     processor = process;
+    joystick = joy;
     
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
@@ -37,9 +40,9 @@ public class RunShooter extends CommandBase {
   @Override
   public void execute() {
 
-    //shooter.shoot(kShooterSpeed);
+    shooter.shoot(joystick.getY());
 
-    if(shooter.getShooterRPM() > (shooter.getShooterSpeed() * kShooterMaxRPM)) processor.unlockProcessor();
+    //if(shooter.getShooterRPM() > (shooter.getShooterSpeed() * kShooterMaxRPM)) processor.unlockProcessor();
   }
 
   // Called once the command ends or is interrupted.

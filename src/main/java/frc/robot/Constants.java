@@ -30,7 +30,7 @@ public final class Constants {
 
     //Without NEOs
     public static final int HOOD = -1;//??
-    public static final int HOOK = -1;
+    public static final int HOOK = 5;
 
     //Talon SRX and FX IDs (must be unique, may range from 0+)
     public static final int LEFT_MASTER_F = -1;
@@ -114,11 +114,11 @@ public final class Constants {
     public static class ProcessorConstants {
 
         //All values experimental
-        public static final double kIntakeSpeed = -.60;
-        public static final double kOuttakeSpeed = 1.0;
-        public static final double kProcessorSpeed = -0.4;
-        public static final double kUnlockSpeed = 1.0;
-        public static final double kLockSpeed = -.25;
+        public static final double kIntakeSpeed = -.55;
+        public static final double kOuttakeSpeed = .75;
+        public static final double kProcessorSpeed = -0.7;
+        public static final double kUnlockSpeed = 0.75;
+        public static final double kLockSpeed = -.20;
     }
 
     public static class ClimberConstants {
