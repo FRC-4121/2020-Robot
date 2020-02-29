@@ -41,11 +41,13 @@ public class RobotContainer {
   private final Climber climber = new Climber();
   private final Pneumatics pneumatics = new Pneumatics();
   private final NetworkTableQuerier ntables = new NetworkTableQuerier();
+  private final CameraController camera = new CameraController();
 
   //Commands
   //Driving
   private final AutoDrive autoCommand = new AutoDrive(drivetrain);
   private final DriveWithJoysticks driveCommand = new DriveWithJoysticks(drivetrain, xbox);
+  private final InvertDirection invertCommand = new InvertDirection(drivetrain, camera);
   //Pneumatics
   private final Shift shift = new Shift(pneumatics);
   private final OperateArm operateIntakeArm = new OperateArm(pneumatics);
@@ -120,7 +122,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     //Driving
-    invertDirectionButton.whenPressed(new InstantCommand(drivetrain::invertDirection, drivetrain));
+    invertDirectionButton.whenPressed(invertCommand);
     //Pneumatics
     shiftButton.whenPressed(shift);
     intakeArmButton.whenPressed(operateIntakeArm);

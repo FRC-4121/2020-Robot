@@ -21,13 +21,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //In progress -> currently testing in 2020-Playground
 public class Climber extends SubsystemBase {
   
-  //private CANSparkMax hookMotor = new CANSparkMax(HOOK, MotorType.kBrushed);
-  //private CANEncoder hookEncoder = hookMotor.getEncoder();
-  private WPI_TalonSRX hookMotor = new WPI_TalonSRX(HOOK);
+  private CANSparkMax hookMotor = new CANSparkMax(HOOK, MotorType.kBrushed);
+  private CANEncoder hookEncoder = hookMotor.getEncoder();
+  //private WPI_TalonSRX hookMotor = new WPI_TalonSRX(HOOK);
   
   public Climber() {
 
-    //hookEncoder.setPosition(0);
+    hookEncoder.setPosition(0);
 
   }
 
@@ -52,8 +52,8 @@ public class Climber extends SubsystemBase {
   }
 
   public double getHeight(){
-    return 0;
-    //return hookEncoder.getPosition() * Math.PI * kShaftSize / (kClimberGearReduction * kClimbEncoderPPR);
+    
+    return hookEncoder.getPosition() * Math.PI * kShaftSize / (kClimberGearReduction * kClimbEncoderPPR);
   }
 
   //May be worthwhile to implement motion magic/PID, a la 2018 elevator

@@ -201,7 +201,14 @@ public class Drivetrain extends SubsystemBase {
 
     else speedCap = kLowGearSpeedCap;
 
-    drivetrain.tankDrive(speedCap * DIRECTION_MULTIPLIER * leftJoyY, speedCap * DIRECTION_MULTIPLIER * rightJoyY);   
+    if(DIRECTION_MULTIPLIER == 1)
+    {
+      drivetrain.tankDrive(speedCap * DIRECTION_MULTIPLIER * leftJoyY, speedCap * DIRECTION_MULTIPLIER * rightJoyY);   
+    }
+    else
+    {
+      drivetrain.tankDrive(speedCap * DIRECTION_MULTIPLIER * rightJoyY, speedCap * DIRECTION_MULTIPLIER * leftJoyY); 
+    }
   }
 
   public void autoDrive(double leftSpeed, double rightSpeed){
