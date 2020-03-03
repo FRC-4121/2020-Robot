@@ -26,20 +26,20 @@ public final class Constants {
     public static final int RIGHT_MASTER_S = 1;
     public static final int RIGHT_SLAVE_1_S = 2;
     public static final int RIGHT_SLAVE_2_S = 3;
-    public static final int PROCESSOR_MAIN = 7;
+    public static final int PROCESSOR_MAIN = 2;
 
     //Without NEOs
     public static final int HOOD = -1;//??
-    public static final int HOOK = 8;
+    public static final int HOOK = 1;
 
     //Talon SRX and FX IDs (must be unique, may range from 0+)
-    public static final int LEFT_MASTER_F = -1;
-    public static final int LEFT_SLAVE_F = -1;
-    public static final int RIGHT_MASTER_F = -1;
-    public static final int RIGHT_SLAVE_F = -1;
-    public static final int INTAKE = 3;
-    public static final int PROCESSOR_END = 4;
-    public static final int TURRET = 2;
+    public static final int LEFT_MASTER_F = 4;
+    public static final int LEFT_SLAVE_F = 2;
+    public static final int RIGHT_MASTER_F = 3;
+    public static final int RIGHT_SLAVE_F = 5;
+    public static final int INTAKE = 7;
+    public static final int PROCESSOR_END = 6;
+    public static final int TURRET = 8;
     public static final int SHOOTER_MASTER = 0;
     public static final int SHOOTER_SLAVE = -1;
 

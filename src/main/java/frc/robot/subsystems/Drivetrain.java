@@ -58,8 +58,8 @@ public class Drivetrain extends SubsystemBase {
   
   public Drivetrain() {
 
-    initSparkDrivetrain();
-    //initFalconDrivetrain();
+    //initSparkDrivetrain();
+    initFalconDrivetrain();
 
     gyro = new ADXRS450_Gyro();
     SmartDashboard.putNumber("Zero Gyro", 0);
@@ -158,6 +158,7 @@ public class Drivetrain extends SubsystemBase {
     rightMotorGroup = new SpeedControllerGroup(rightMasterFalcon, rightSlaveFalcon);
 
     drivetrain = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
+    drivetrain.setRightSideInverted(false);
 
     //Set follower mode
     leftSlaveFalcon.follow(leftMasterFalcon);
