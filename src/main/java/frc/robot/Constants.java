@@ -82,18 +82,19 @@ public final class Constants {
         public static final int kShooterMaxRPM = 6380;
 
         public static final double kTalonFXPPR = 2048;
-        public static final double kTurretEncoderPPR = 7;
+        public static final double kTurretEncoderPPR = 10.5;
 
         //Turret dimensions/other config
-        public static final double kTurretGearReduction = 71;
+        public static final double kTurretGearReduction = 1;
         public static final double kTurretSprocketDia = 1;
         public static final double kTurretDiskDia = 13.75;
 
+        public static final double kTurretMinAngle = 0;
         public static final double kTurretMaxAngle = 300;
 
         //
         public static final double kShooterSpeed = -1.0;
-        public static final double kTurretSpeed = .1;
+        public static final double kTurretSpeed = .15;
     }
 
     public static class PneumaticsConstants {

@@ -15,6 +15,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -31,10 +33,9 @@ public class Shooter extends SubsystemBase {
   
   private final CANSparkMax turret = new CANSparkMax(TURRET, MotorType.kBrushless);
 
-  private final Encoder turretEncoder = new Encoder(TURRET_ENCODER_1, TURRET_ENCODER_2);
-  private final DigitalInput turretLimit = new DigitalInput(TURRET_LIMIT_SWITCH);
+  private final CANEncoder turretEncoder = turret.getEncoder();
 
-  private final PIDControl turretAnglePID = new PIDControl(kP_Turret, kI_Turret, kD_Turret);
+  private final CANPIDController turretAnglePID = turret.getPIDController();
 
   private boolean resetEncoder = false;
 
@@ -76,32 +77,17 @@ public class Shooter extends SubsystemBase {
 
     //Configured to calculate the angle around the turret from the limit switch
     //theta (radians) = arclength / radius
-    turretEncoder.setDistancePerPulse(-kTurretSprocketDia * 360 / (kTurretEncoderPPR * kTurretGearReduction * kTurretDiskDia/2));
+    turretEncoder.setPosition(0);
+    turretEncoder.setPositionConversionFactor(-kTurretSprocketDia * 360 / (kTurretEncoderPPR * kTurretGearReduction * kTurretDiskDia/2));
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Turret Angle", turretEncoder.getDistance());
-    SmartDashboard.putBoolean("Turret Limit", turretLimit.get()); 
+    SmartDashboard.putNumber("Turret Angle", getTurretAngle());
     SmartDashboard.putNumber("Shooter RPM", getShooterRPM());
     SmartDashboard.putNumber("Shooter Speed", getShooterSpeed());
     
-    if (turretLimit.get() == false)
-    {
-      //...and the reset flag is false...
-      if(!resetEncoder)
-      {
-        //...reset the encoder and lock
-        turretEncoder.reset();
-        resetEncoder = true;
-      }
-    }
-    else //if the limit switch moves away, make it reset the next time it comes down.
-    {
-      resetEncoder = false;
-    }
-
     //For testing we grab the PID from the smart dash
     double p = SmartDashboard.getNumber("P Shoot", save_p);
     double i = SmartDashboard.getNumber("I Shoot", save_i);
@@ -133,6 +119,10 @@ public class Shooter extends SubsystemBase {
     //Warning - this will run all the time!!!
     //shooterMaster.set(ControlMode.Velocity, speed * 1023);
     //shooterSlave.set(ControlMode.Velocity, -speed * 1023);
+
+    //Periodic turret control loop here?
+
+
   }
 
   public void shoot(double speed1){
@@ -158,14 +148,9 @@ public class Shooter extends SubsystemBase {
     shooterSlave.set(0);
   }
 
-  public boolean getTurretLimit(){
-
-    return turretLimit.get();
-  }
-
   public double getTurretAngle(){
 
-    return turretEncoder.getDistance();
+    return turretEncoder.getPosition();
   }
 
   public double getShooterRPM(){

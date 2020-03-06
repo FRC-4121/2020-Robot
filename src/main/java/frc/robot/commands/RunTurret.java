@@ -48,7 +48,7 @@ public class RunTurret extends CommandBase {
   @Override
   public boolean isFinished() {
 
-    if(!shooter.getTurretLimit() || (shooter.getTurretAngle() > kTurretMaxAngle))
+    if(shooter.getTurretAngle() < kTurretMinAngle || (shooter.getTurretAngle() > kTurretMaxAngle))
       return true;
     return false;
   }

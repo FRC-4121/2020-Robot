@@ -20,7 +20,7 @@ public class CameraController extends SubsystemBase {
   private UsbCamera reverseCamera;
   private UsbCamera shooterCamera;
   private CameraServer camServer;
-  private VideoSink test;
+  private VideoSink switcher;
 
   private boolean forwardCamera = true;
   
@@ -40,17 +40,17 @@ public class CameraController extends SubsystemBase {
     reverseCamera.setFPS(15);
     reverseCamera.setBrightness(50);
 
-    test = camServer.addSwitchedCamera("Switched");
+    switcher = camServer.addSwitchedCamera("Switched");
 
     shooterCamera.setResolution(160, 120);
     shooterCamera.setFPS(15);
     shooterCamera.setBrightness(50);
 
 
-    //intakeCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    //reverseCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    intakeCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    reverseCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
 
-    test.setSource(intakeCamera);
+    switcher.setSource(intakeCamera);
   }
 
   @Override
@@ -63,11 +63,11 @@ public class CameraController extends SubsystemBase {
     forwardCamera = !forwardCamera;
     if (forwardCamera)
     {
-      test.setSource(intakeCamera);
+      switcher.setSource(intakeCamera);
     }
     else
     {
-      test.setSource(reverseCamera);
+      switcher.setSource(reverseCamera);
     }
   }
 }
