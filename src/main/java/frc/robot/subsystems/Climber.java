@@ -21,9 +21,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //In progress -> currently testing in 2020-Playground
 public class Climber extends SubsystemBase {
   
-  private CANSparkMax hookMotor = new CANSparkMax(HOOK, MotorType.kBrushed);
+  private CANSparkMax hookMotor = new CANSparkMax(HOOK, MotorType.kBrushless);
   private CANEncoder hookEncoder = hookMotor.getEncoder();
-  //private WPI_TalonSRX hookMotor = new WPI_TalonSRX(HOOK);
   
   public Climber() {
 

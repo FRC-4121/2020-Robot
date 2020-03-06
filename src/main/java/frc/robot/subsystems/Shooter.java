@@ -15,6 +15,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -27,7 +29,7 @@ public class Shooter extends SubsystemBase {
   private final WPI_TalonFX shooterMaster = new WPI_TalonFX(SHOOTER_MASTER);
   private final WPI_TalonFX shooterSlave = new WPI_TalonFX(SHOOTER_SLAVE);
   
-  private final WPI_TalonSRX turret = new WPI_TalonSRX(TURRET);
+  private final CANSparkMax turret = new CANSparkMax(TURRET, MotorType.kBrushless);
 
   private final Encoder turretEncoder = new Encoder(TURRET_ENCODER_1, TURRET_ENCODER_2);
   private final DigitalInput turretLimit = new DigitalInput(TURRET_LIMIT_SWITCH);

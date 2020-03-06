@@ -27,15 +27,15 @@ public class CameraController extends SubsystemBase {
   public CameraController() {
 
 
-    shooterCamera = CameraServer.getInstance().startAutomaticCapture("Shooter View", 2);
+    shooterCamera = CameraServer.getInstance().startAutomaticCapture("Shooter View", 1);
     camServer = CameraServer.getInstance();
 
-    intakeCamera = new UsbCamera("Intake View", 0);
+    intakeCamera = new UsbCamera("Intake View", 2);
     intakeCamera.setResolution(160, 120);
     intakeCamera.setFPS(15);
     intakeCamera.setBrightness(50);
 
-    reverseCamera = new UsbCamera("Reverse Drive View", 1);
+    reverseCamera = new UsbCamera("Reverse Drive View", 0);
     reverseCamera.setResolution(160, 120);
     reverseCamera.setFPS(15);
     reverseCamera.setBrightness(50);
