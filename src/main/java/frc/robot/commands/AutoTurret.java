@@ -9,24 +9,37 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.subsystems.Turret;;
+import static frc.robot.Constants.*;
+import static frc.robot.Constants.ShooterConstants.*;
+import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.NetworkTableQuerier;
+import frc.robot.extraClasses.PIDControl;
 
 
 public class AutoTurret extends CommandBase {
 
   //Declare class variables
   private Turret myTurret;
+  private NetworkTableQuerier myNTQuerier;
 
   private boolean stopAutoTurret;
+  private boolean overrideAutoTurret;
+  private boolean foundTarget;
+  private boolean targetLock;
+  private double targetOffset;
+
+  //Declare PID controller
+  PIDControl myPID;
 
 
   /**
    * Creates a new AutoTurret.
    */
-  public AutoTurret(Turret turret) {
+  public AutoTurret(Turret turret, NetworkTableQuerier ntquerier) {
 
     // Assign variables
     myTurret = turret;
+    myNTQuerier = ntquerier;
 
     // Declare subsystem dependencies
     addRequirements(myTurret);
@@ -40,6 +53,10 @@ public class AutoTurret extends CommandBase {
 
     // Initialize flags
     stopAutoTurret = false;
+    overrideAutoTurret = false;
+
+    // Initialize PID
+    myPID = new PIDControl(kP_Turret, kI_Turret, kD_Turret);
 
   }
 
@@ -49,6 +66,24 @@ public class AutoTurret extends CommandBase {
   public void execute() {
 
     // Get status of flags
+    foundTarget = myNTQuerier.getFoundTapeFlag();
+    targetLock = myNTQuerier.getTargetLockFlag();
+    targetOffset = myNTQuerier.getTapeOffset();
+
+    // Maintain target lock
+    if (!overrideAutoTurret){
+
+      if (foundTarget){
+
+        if (!targetLock){
+
+          
+        }
+
+      }
+
+    }
+
 
   }
 

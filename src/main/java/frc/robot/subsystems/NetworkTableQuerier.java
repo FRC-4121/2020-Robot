@@ -8,10 +8,12 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class NetworkTableQuerier implements Runnable {
 
+    // Create network tables
     private static NetworkTableInstance networkTableInstance;
     private static NetworkTable visionTable;
     private static NetworkTable navxTable;
 
+    // Create network table entries
     private static NetworkTableEntry robotStop;
     private static NetworkTableEntry zeroGyro;
     private static NetworkTableEntry piGyroAngle;
@@ -24,26 +26,60 @@ public class NetworkTableQuerier implements Runnable {
     private static NetworkTableEntry tapeOffset;
     private static NetworkTableEntry targetLock;
 
+    //Declare class variables
+    private boolean runNetworkTables;
+
+    /**
+     * Class constructor
+     */
     public NetworkTableQuerier(){
 
+        // Initialize the network tables
         initNetworkTables();
+
+        // Set flags
+        runNetworkTables = true;
+
     }
     
+
+    /**
+     * Main execution thread
+     */
     public void run(){
         
-        while(true){
+        while(runNetworkTables){
 
             queryNetworkTables();
              
         }
     }
 
+
+    /**
+     * Start the main execution thread
+     */
     public void start(){
 
+        runNetworkTables = true;
         Thread ntThread = new Thread(this);
         ntThread.start();
+
     }
 
+
+    /**
+     * Stop the main execution thread
+     */
+    public void stop(){
+
+        runNetworkTables = false;
+        
+    }
+
+    /**
+     * Initialize network tables
+     */
     private void initNetworkTables(){
 
         networkTableInstance = NetworkTableInstance.getDefault();
@@ -61,6 +97,9 @@ public class NetworkTableQuerier implements Runnable {
     }
 
 
+    /**
+     * Get values from network tables
+     */
     private void queryNetworkTables(){
 
         robotStop = visionTable.getEntry("RobotStop");
@@ -90,7 +129,6 @@ public class NetworkTableQuerier implements Runnable {
      * "TapeOffset"
      * "TapeDistance" 
      */
-
     public synchronized double getVisionDouble(String entry){
 
         return visionTable.getEntry(entry).getDouble(0);
@@ -110,17 +148,73 @@ public class NetworkTableQuerier implements Runnable {
         return visionTable.getEntry(entry).getBoolean(false);
     }
 
+
+    /**
+     * Get the Found Tape flag
+     * @return
+     */
+    public synchronized boolean getFoundTapeFlag(){
+
+        return foundTape.getBoolean(false);
+
+    }
+
+
+    /**
+     * Get the Target Lock flag
+     * @return
+     */
+    public synchronized boolean getTargetLockFlag(){
+
+        return targetLock.getBoolean(false);
+
+    }
+
+
+    /**
+     * Get the tape offset
+     * @return
+     */
+    public synchronized double getTapeOffset(){
+
+        return tapeOffset.getDouble(0.0);
+
+    }
+
+
+    /**
+     * Get the tape distance
+     * @return
+     */
+    public synchronized double getTapeDistance(){
+
+        return tapeDistance.getDouble(0.0);
+
+    }
+
+
+    /**
+     * Get the VMX gyro angle
+     * @return
+     */
     public synchronized double getPiGyro(){
 
         return navxTable.getEntry("GyroAngle").getDouble(0);
     }
 
 
+    /**
+     * Set the robot stop flag
+     */
     public synchronized void robotStop(){
 
         robotStop.setNumber(1);
     }
 
+
+    /**
+     * Zero the VMX gyro
+     */
     public synchronized void zeroPiGyro(){
 
         zeroGyro.setNumber(1);

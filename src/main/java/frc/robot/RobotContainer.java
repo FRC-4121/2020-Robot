@@ -49,40 +49,54 @@ public class RobotContainer {
   private final AutoDrive autoCommand = new AutoDrive(drivetrain);
   private final DriveWithJoysticks driveCommand = new DriveWithJoysticks(drivetrain, xbox);
   private final InvertDirection invertCommand = new InvertDirection(drivetrain, camera);
+
   //Pneumatics
   private final Shift shift = new Shift(pneumatics);
   private final OperateArm operateIntakeArm = new OperateArm(pneumatics);
   private final OperatePTO operatePTO = new OperatePTO(pneumatics);
+
   //Intake
   //private final RunIntake in = new RunIntake(intake, kIntakeSpeed);
   //private final RunIntake out = new RunIntake(intake, kOuttakeSpeed);
+
   //Processor
   private final RunProcessor runProcessor = new RunProcessor(processor, false);
   private final RunProcessor invertProcessor = new RunProcessor(processor, true);
+
   //Shooter
   private final RunTurret clockwise = new RunTurret(turret, kTurretSpeed);
   private final RunTurret counterclockwise = new RunTurret(turret, -kTurretSpeed);
   private final RunShooter shoot = new RunShooter(shooter, processor, testingJoystick);
+
   //Climber
   private final RunHook raiseHook = new RunHook(climber, kHookSpeed);
   private final RunHook lowerHook = new RunHook(climber, -kHookSpeed);
 
+  //Auto
+  private final AutoTurret autoTurret = new AutoTurret(turret, ntables);
+  private final AutoShooter autoShoot = new AutoShooter(shooter, ntables);
+  
+
   //Buttons
   //Driving
   private JoystickButton invertDirectionButton = new JoystickButton(xbox, 6);
+
   //Pneumatics
   private JoystickButton shiftButton = new JoystickButton(xbox, 5);
   private JoystickButton intakeArmButton = new JoystickButton(testingJoystick, 1);
   private JoystickButton PTOButton = new JoystickButton(testingJoystick, 2);
+
   //Intake
   private JoystickButton inButton = new JoystickButton(testingJoystick, 3);
   private JoystickButton outButton = new JoystickButton(testingJoystick, 4);
+
   //Processor
   private JoystickButton runProcButton = new JoystickButton(testingJoystick, 5);
   private JoystickButton invertProcessorButton = new JoystickButton(testingJoystick, 6);
   private JoystickButton processorButton;
   private JoystickButton intakeButton;
   private JoystickButton stopProcessorButton;
+
   //Shooter
   private JoystickButton clockwiseTurretButton = new JoystickButton(testingJoystick, 9);
   private JoystickButton counterclockTurretButton = new JoystickButton(testingJoystick, 10);
@@ -111,7 +125,10 @@ public class RobotContainer {
     //Drivetrain -> drive with xbox joysticks
     drivetrain.setDefaultCommand(driveCommand);
 
-    shooter.setDefaultCommand(shoot);
+    shooter.setDefaultCommand(autoShoot);
+
+    turret.setDefaultCommand(autoTurret);
+
   }
 
   /**
@@ -141,8 +158,8 @@ public class RobotContainer {
     //Shooter
     clockwiseTurretButton.whileHeld(clockwise);
     counterclockTurretButton.whileHeld(counterclockwise);
-    clockwiseTurretButton.whenReleased(new InstantCommand(shooter::stopTurret, shooter));
-    counterclockTurretButton.whenReleased(new InstantCommand(shooter::stopTurret, shooter));
+    clockwiseTurretButton.whenReleased(new InstantCommand(turret::stopTurret, turret));
+    counterclockTurretButton.whenReleased(new InstantCommand(turret::stopTurret, turret));
     shootButton.whileHeld(new InstantCommand(processor::unlockProcessor, processor));
     shootButton.whenReleased(new InstantCommand(processor::stopProcessor, processor));
     //Climber
@@ -161,5 +178,10 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return autoCommand;
+  }
+
+  public Command getAutoShootCommand(){
+
+    return autoShoot;
   }
 }

@@ -32,13 +32,13 @@ public class Ballistics {
     public double missileMaxSpeed;
 
     //Ballistics array configuration values
-    public static int minDistance = 2;//in feet
-    public static int maxDistance = 40;//in feet
+    public static int minDistance = 24;//in inches
+    public static int maxDistance = 480;//in inches
     public int distanceIncrement = 1;//not recommended to change this value
     
     //Can be configured for a 'continuous' angle or a two-angle system
-    public int minAngle = 55;//in degrees
-    public int maxAngle = 55;//in degrees
+    public int minAngle = 40;//in degrees
+    public int maxAngle = 40;//in degrees
     public int angleIncrement = 1;//make sure this is a factor of the difference between min and max angle, unless you are only using one angle, then make it 1
     
     public int minSpeed = 70;//percent
@@ -146,13 +146,13 @@ public class Ballistics {
     public double calculateHeight(double distance, double angle, double speed){
     
         //Derived from parametric equations of t based on basic trajectories.  Does not account for air resistance; this should be accounted for in the 'slip factor'
-        double height = tan(toRadians(angle)) * distance * 12 - 0.5 * g * pow(distance * 12 / (cos(toRadians(angle)) * missileMaxSpeed * speed), 2);
+        double height = tan(toRadians(angle)) * distance - 0.5 * g * pow(distance / (cos(toRadians(angle)) * missileMaxSpeed * speed), 2);
 
         return height;
     }
 
     //Actually grab shot configurations from the table
-    public static double[] queryBallisticsTable(double distance){
+    public double[] queryBallisticsTable(double distance){
 
         double[] tableValues = new double[4];
 
@@ -205,7 +205,7 @@ public class Ballistics {
 
     // public static void main(String[] args){
 
-    //     Ballistics ballistics = new Ballistics(98.25, 24, 5, 6380, 6, .227);
+    //     Ballistics ballistics = new Ballistics(98.25, 22.5, 5, 6380, 6, .227);
 
     //     System.out.println("-----------------------------------------");
     //     System.out.print("4121 Ballistics Program\n");
@@ -221,7 +221,7 @@ public class Ballistics {
 
     //         System.out.println("Attempting shot at distance of " + distance + " feet.");
 
-    //         double[] tableQuery = queryBallisticsTable(distance);
+    //         double[] tableQuery = ballistics.queryBallisticsTable(distance);
     //         System.out.println("Calculating...");
             
     //         if(tableQuery[0] == 1){

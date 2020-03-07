@@ -69,13 +69,15 @@ public final class Constants {
     public static class ShooterConstants {
 
         //PID constants
-        public static final double kP_Shoot = 0.5;
+        public static final double kP_Shoot = 0.1;
         public static final double kI_Shoot = 0;
         public static final double kD_Shoot = 0;
         public static final double kF_Shoot = -1; 
         public static final double kP_Turret = .04;
         public static final double kI_Turret = 0;
         public static final double kD_Turret = 0.0;
+
+        public static final double kSpeedCorrectionFactor = 1.0;
 
         public static final int kPIDLoopIdxShoot = 0;
         public static final int kTimeoutMsShoot = 20;
@@ -94,7 +96,7 @@ public final class Constants {
 
         //
         public static final double kShooterSpeed = -1.0;
-        public static final double kTurretSpeed = .15;
+        public static final double kTurretSpeed = .1;
     }
 
     public static class PneumaticsConstants {
