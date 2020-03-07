@@ -29,8 +29,11 @@ public class AutoShooter extends CommandBase {
   private double targetSpeedCorrected;
   private double speed;
   private double speedCorrection;
+  private double shotPossible;//Ballistics value; 0 is false, 1 is true
 
   private boolean runSpeedControl = true;
+
+  private double[] ballisticsData;
   
   public AutoShooter(Shooter shoot, NetworkTableQuerier querier) {
 
@@ -61,18 +64,31 @@ public class AutoShooter extends CommandBase {
 
       targetLock = ntQuerier.getTargetLockFlag();
 
-      if(targetLock){
+      if(targetLock)
+      {
         
         distance = ntQuerier.getTapeDistance();
-        targetSpeed = ballistics.queryBallisticsTable(distance)[2];
+        ballisticsData = ballistics.queryBallisticsTable(distance);
+        shotPossible = ballisticsData[0];
+
+        if(shotPossible == 0)
+        {
+          SmartDashboard.putBoolean("Shot Possible", false);
+          targetSpeed = speed;
+        }
+        else
+        {
+          SmartDashboard.putBoolean("Shot Possible", true);
+          targetSpeed = ballisticsData[2];
+        }
+
         targetSpeedCorrected = targetSpeed * kSpeedCorrectionFactor;
         SmartDashboard.putNumber("Ballistics Speed", targetSpeed);
 
-        //speedCorrection = myPID.run(shooter.getShooterRPM() / kShooterMaxRPM, -targetSpeedCorrected);
-
         shooter.shoot(-targetSpeedCorrected);
       }
-      else {
+      else 
+      {
 
         shooter.shoot(-speed);
       }

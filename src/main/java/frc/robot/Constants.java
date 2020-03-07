@@ -77,7 +77,7 @@ public final class Constants {
         public static final double kI_Turret = 0;
         public static final double kD_Turret = 0.0;
 
-        public static final double kSpeedCorrectionFactor = 1.0;
+        public static final double kSpeedCorrectionFactor = 1.05;
 
         public static final int kPIDLoopIdxShoot = 0;
         public static final int kTimeoutMsShoot = 20;
