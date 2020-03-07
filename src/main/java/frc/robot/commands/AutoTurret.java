@@ -7,51 +7,63 @@
 
 package frc.robot.commands;
 
-import static frc.robot.Constants.ShooterConstants.*;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+
 import frc.robot.subsystems.Turret;;
 
-public class RunTurret extends CommandBase {
- 
+
+public class AutoTurret extends CommandBase {
+
+  //Declare class variables
   private Turret myTurret;
-  private double speed;
+
+  private boolean stopAutoTurret;
 
 
-  public RunTurret(Turret turret, double turretSpeed) {
+  /**
+   * Creates a new AutoTurret.
+   */
+  public AutoTurret(Turret turret) {
 
+    // Assign variables
     myTurret = turret;
-    speed = turretSpeed;
 
-    // Use addRequirements() here to declare subsystem dependencies.
+    // Declare subsystem dependencies
     addRequirements(myTurret);
 
   }
 
+  
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+    // Initialize flags
+    stopAutoTurret = false;
+
   }
+
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    myTurret.rotateTurret(speed);
+    // Get status of flags
 
   }
+
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
   }
 
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
 
-    if(myTurret.getTurretAngle() < kTurretMinAngle || (myTurret.getTurretAngle() > kTurretMaxAngle))
-      return true;
-    return false;
+    return stopAutoTurret;
+    
   }
 }

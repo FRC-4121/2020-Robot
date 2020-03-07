@@ -36,6 +36,7 @@ public class RobotContainer {
   //Subsystems
   private final Drivetrain drivetrain = new Drivetrain();
   private final Shooter shooter = new Shooter();
+  private final Turret turret = new Turret();
   //private final Intake intake = new Intake();
   private final Processor processor = new Processor();
   private final Climber climber = new Climber();
@@ -59,8 +60,8 @@ public class RobotContainer {
   private final RunProcessor runProcessor = new RunProcessor(processor, false);
   private final RunProcessor invertProcessor = new RunProcessor(processor, true);
   //Shooter
-  private final RunTurret clockwise = new RunTurret(shooter, kTurretSpeed);
-  private final RunTurret counterclockwise = new RunTurret(shooter, -kTurretSpeed);
+  private final RunTurret clockwise = new RunTurret(turret, kTurretSpeed);
+  private final RunTurret counterclockwise = new RunTurret(turret, -kTurretSpeed);
   private final RunShooter shoot = new RunShooter(shooter, processor, testingJoystick);
   //Climber
   private final RunHook raiseHook = new RunHook(climber, kHookSpeed);
