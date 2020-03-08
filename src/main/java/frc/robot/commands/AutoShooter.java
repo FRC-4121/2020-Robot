@@ -86,6 +86,8 @@ public class AutoShooter extends CommandBase {
         SmartDashboard.putNumber("Ballistics Speed", targetSpeed);
 
         shooter.shoot(-targetSpeedCorrected);
+        //I have battery concerns about this implementation.  If we notice that battery draw during a match is problematic for speed control, we
+        //will need to revert to a pid for RPM in some way.  This would be sufficiently complicated that it is a low priority, however.
       }
       else 
       {
@@ -97,7 +99,6 @@ public class AutoShooter extends CommandBase {
 
     SmartDashboard.putNumber("Shooter Speed", shooter.getShooterSpeed());
     SmartDashboard.putNumber("Shooter RPM", shooter.getShooterRPM());
-    SmartDashboard.putNumber("Speed Correct", speedCorrection);
   }
 
   // Called once the command ends or is interrupted.
