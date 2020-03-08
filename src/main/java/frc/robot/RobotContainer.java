@@ -64,8 +64,8 @@ public class RobotContainer {
   private final RunProcessor invertProcessor = new RunProcessor(processor, true);
 
   //Shooter
-  private final RunTurret clockwise = new RunTurret(turret, kTurretSpeed);
-  private final RunTurret counterclockwise = new RunTurret(turret, -kTurretSpeed);
+  private final RunTurret clockwise = new RunTurret(turret, -kTurretSpeed);
+  private final RunTurret counterclockwise = new RunTurret(turret, kTurretSpeed);
   private final RunShooter shoot = new RunShooter(shooter, processor, testingJoystick);
 
   //Climber
@@ -101,6 +101,7 @@ public class RobotContainer {
   private JoystickButton clockwiseTurretButton = new JoystickButton(testingJoystick, 9);
   private JoystickButton counterclockTurretButton = new JoystickButton(testingJoystick, 10);
   private JoystickButton shootButton = new JoystickButton(testingJoystick, 11);
+  private JoystickButton testAutoTurret = new JoystickButton(testingJoystick, 12);
 
   //Climber
   private JoystickButton raiseHookButton = new JoystickButton(testingJoystick, 7);
@@ -125,9 +126,9 @@ public class RobotContainer {
     //Drivetrain -> drive with xbox joysticks
     drivetrain.setDefaultCommand(driveCommand);
 
-    shooter.setDefaultCommand(autoShoot);
+    shooter.setDefaultCommand(shoot);
 
-    turret.setDefaultCommand(autoTurret);
+    //turret.setDefaultCommand(autoTurret);
 
   }
 
@@ -155,6 +156,7 @@ public class RobotContainer {
     invertProcessorButton.whileHeld(invertProcessor);
     runProcButton.whenReleased(new InstantCommand(processor::stopProcessor, processor));
     invertProcessorButton.whenReleased(new InstantCommand(processor::stopProcessor, processor));
+    
     //Shooter
     clockwiseTurretButton.whileHeld(clockwise);
     counterclockTurretButton.whileHeld(counterclockwise);
@@ -162,6 +164,8 @@ public class RobotContainer {
     counterclockTurretButton.whenReleased(new InstantCommand(turret::stopTurret, turret));
     shootButton.whileHeld(new InstantCommand(processor::unlockProcessor, processor));
     shootButton.whenReleased(new InstantCommand(processor::stopProcessor, processor));
+    testAutoTurret.whenPressed(autoTurret);
+
     //Climber
     raiseHookButton.whileHeld(new InstantCommand(climber::runHook, climber));
     lowerHookButton.whileHeld(new InstantCommand(climber::downHook, climber));

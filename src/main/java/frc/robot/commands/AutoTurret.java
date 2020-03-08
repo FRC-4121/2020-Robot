@@ -26,6 +26,7 @@ public class AutoTurret extends CommandBase {
   private boolean overrideAutoTurret;
   private boolean foundTarget;
   private boolean targetLock;
+  private boolean firstRun;
   private double targetOffset;
 
   private double turretCorrection;
@@ -56,6 +57,7 @@ public class AutoTurret extends CommandBase {
     // Initialize flags
     stopAutoTurret = false;
     overrideAutoTurret = false;
+    firstRun = true;
 
 
     turretCorrection = 0;
@@ -69,6 +71,18 @@ public class AutoTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    double speed = 0;
+    double turretAngle = myTurret.getTurretAngle();
+
+    //If first time, rotate turret
+    // if (firstRun){
+    //   speed = -kTurretSpeed * myPID.run(turretAngle, 90.0);
+    //   myTurret.rotateTurret(speed);
+    //   if (turretAngle >= 85.0 && turretAngle <= 95.0){
+    //     firstRun = false;
+    //   }
+    // }
 
     // Get status of flags/NT data
     foundTarget = myNTQuerier.getFoundTapeFlag();
@@ -88,16 +102,33 @@ public class AutoTurret extends CommandBase {
         if (!targetLock){
 
           //If the turret is in a safe operating range for the physical constraints of the robot
-          if(myTurret.getTurretAngle() < kTurretMaxAngle && myTurret.getTurretAngle() > kTurretMinAngle){
+          speed = -kTurretSpeed * myPID.run(targetOffset, 0.0);
 
-            //Run PID control on the offset of the target in the image until target is locked
-            turretCorrection = myPID.run(targetOffset, 0);
-            myTurret.rotateTurret(turretCorrection);
-          
+          if(speed > 0){
+            if(turretAngle <= kTurretMinAngle){
+              myTurret.rotateTurret(speed);
+            }
+            else if(turretAngle < kTurretMaxAngle)
+            {
+              myTurret.rotateTurret(speed);
+            }
+            else
+            {
+              myTurret.stopTurret();
+            }
           }
-          else
+          else if (speed < 0)
           {
-            //If we are at the bounds of the turret, we need to figure out how this will work.
+            if(turretAngle >= kTurretMaxAngle){
+              myTurret.rotateTurret(speed);
+            }
+            else if(turretAngle > kTurretMinAngle){
+              myTurret.rotateTurret(speed);
+            }
+            else
+            {
+              myTurret.stopTurret();
+            }
           }
         
         }
@@ -105,6 +136,8 @@ public class AutoTurret extends CommandBase {
         {
           //If target is locked, stop the motor
           myTurret.stopTurret();
+
+          firstRun = false;
         }
 
       }
@@ -119,6 +152,8 @@ public class AutoTurret extends CommandBase {
       //Manual control will pull data from the potentiometer on the oi board.  For now, we will access a joystick as the 'potentiometer'
     }
 
+    
+    
   }
 
 

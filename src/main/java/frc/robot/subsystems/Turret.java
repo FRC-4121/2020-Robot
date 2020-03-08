@@ -23,10 +23,10 @@ public class Turret extends SubsystemBase {
   //Declare turret motor and encoder
   private final CANSparkMax turret = new CANSparkMax(TURRET, MotorType.kBrushless);
   private final CANEncoder turretEncoder = turret.getEncoder();
-  private final CANPIDController turretAnglePID = turret.getPIDController();
 
   //Declare class variables
   private boolean resetEncoder = false;
+  private double turretAngle;
 
 
   /**
@@ -37,8 +37,7 @@ public class Turret extends SubsystemBase {
     //Configured to calculate the angle around the turret from the limit switch
     //theta (radians) = arclength / radius
     turretEncoder.setPosition(0);
-    turretEncoder.setPositionConversionFactor(-kTurretSprocketDia * 360 / (kTurretEncoderPPR * kTurretGearReduction * kTurretDiskDia/2));
-
+    //turretEncoder.setPositionConversionFactor(-kTurretSprocketDia * 360 / (kTurretEncoderPPR * kTurretGearReduction * kTurretDiskDia/2));
   }
 
 
@@ -48,7 +47,8 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Turret Encoder", turretEncoder.getPosition());
+    turretAngle = turretEncoder.getPosition() * 140 / 3.04;
+    SmartDashboard.putNumber("Turret Angle", turretAngle);
   }
 
 
@@ -78,7 +78,7 @@ public class Turret extends SubsystemBase {
    */
   public double getTurretAngle(){
 
-    return turretEncoder.getPosition();
+    return turretAngle;
   }
 
 }

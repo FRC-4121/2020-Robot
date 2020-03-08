@@ -18,17 +18,11 @@ package frc.robot;
 
 public final class Constants {
 
-    //Spark Max IDs (must be unique, may range from 1+)
+    //Spark Max IDs
     //With NEOs
-    public static final int LEFT_MASTER_S = 4;
-    public static final int LEFT_SLAVE_1_S = 5;
-    public static final int LEFT_SLAVE_2_S = 6;
-    public static final int RIGHT_MASTER_S = 1;
-    public static final int RIGHT_SLAVE_1_S = 2;
-    public static final int RIGHT_SLAVE_2_S = 3;
-    public static final int PROCESSOR_MAIN = 2;
-    public static final int TURRET = 3;
-    public static final int HOOK = 1;
+    public static final int PROCESSOR_MAIN = 8;
+    public static final int TURRET = 9;
+    public static final int HOOK = 10;
 
     //Talon SRX and FX IDs (must be unique, may range from 0+)
     public static final int LEFT_MASTER_F = 4;
@@ -73,11 +67,11 @@ public final class Constants {
         public static final double kI_Shoot = 0;
         public static final double kD_Shoot = 0;
         public static final double kF_Shoot = -1; 
-        public static final double kP_Turret = .04;
+        public static final double kP_Turret = 0.0035;
         public static final double kI_Turret = 0;
         public static final double kD_Turret = 0.0;
 
-        public static final double kSpeedCorrectionFactor = 1.05;
+        public static final double kSpeedCorrectionFactor = 1.02;
 
         public static final int kPIDLoopIdxShoot = 0;
         public static final int kTimeoutMsShoot = 20;
@@ -92,11 +86,11 @@ public final class Constants {
         public static final double kTurretDiskDia = 13.75;
 
         public static final double kTurretMinAngle = 0;
-        public static final double kTurretMaxAngle = 300;
+        public static final double kTurretMaxAngle = 136;
 
         //
         public static final double kShooterSpeed = -1.0;
-        public static final double kTurretSpeed = .1;
+        public static final double kTurretSpeed = .1;//positive is counterclockwise
     }
 
     public static class PneumaticsConstants {

@@ -53,12 +53,9 @@ public class Drivetrain extends SubsystemBase {
   private CANEncoder rightMasterEncoder;
   private CANEncoder rightSlave1Encoder;
   private CANEncoder rightSlave2Encoder;
-
-  private boolean sparkDrive;
   
   public Drivetrain() {
 
-    //initSparkDrivetrain();
     initFalconDrivetrain();
 
     gyro = new ADXRS450_Gyro();
@@ -94,58 +91,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   //Config functions
-  private void initSparkDrivetrain(){
-
-    //Init motors, speed controller groups, and drivetrain
-    leftMasterSpark= new CANSparkMax(LEFT_MASTER_S, MotorType.kBrushless);
-    leftSlave1Spark = new CANSparkMax(LEFT_SLAVE_1_S, MotorType.kBrushless);
-    leftSlave2Spark = new CANSparkMax(LEFT_SLAVE_2_S, MotorType.kBrushless);
-    leftMotorGroup = new SpeedControllerGroup(leftMasterSpark, leftSlave1Spark, leftSlave2Spark);
-
-    rightMasterSpark = new CANSparkMax(RIGHT_MASTER_S, MotorType.kBrushless);
-    rightSlave1Spark = new CANSparkMax(RIGHT_SLAVE_1_S, MotorType.kBrushless);
-    rightSlave2Spark = new CANSparkMax(RIGHT_SLAVE_2_S, MotorType.kBrushless);
-    rightMotorGroup = new SpeedControllerGroup(rightMasterSpark, rightSlave1Spark, rightSlave2Spark);
-
-    drivetrain = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
-
-    //Set follower mode
-    leftSlave1Spark.follow(leftMasterSpark);
-    leftSlave2Spark.follow(leftMasterSpark);
-    rightSlave1Spark.follow(rightMasterSpark);
-    rightSlave2Spark.follow(rightMasterSpark);
-    
-    //Set brake mode
-    leftMasterSpark.setIdleMode(IdleMode.kBrake);
-    leftSlave1Spark.setIdleMode(IdleMode.kBrake);
-    leftSlave2Spark.setIdleMode(IdleMode.kBrake);
-    rightMasterSpark.setIdleMode(IdleMode.kBrake);
-    rightSlave1Spark.setIdleMode(IdleMode.kBrake);
-    rightSlave2Spark.setIdleMode(IdleMode.kBrake);
-    
-    //Init encoders
-    leftMasterEncoder = leftMasterSpark.getEncoder();
-    leftSlave1Encoder = leftSlave1Spark.getEncoder();
-    leftSlave2Encoder = leftSlave2Spark.getEncoder();
-    rightMasterEncoder = rightMasterSpark.getEncoder();
-    rightSlave1Encoder = rightSlave1Spark.getEncoder();
-    rightSlave2Encoder = rightSlave2Spark.getEncoder();
-
-    //Config encoders
-    // leftMasterEncoder.setInverted(!kMotorInvert);
-    // leftSlave1Encoder.setInverted(!kMotorInvert);
-    // leftSlave2Encoder.setInverted(!kMotorInvert);
-    // rightMasterEncoder.setInverted(kMotorInvert);
-    // rightSlave1Encoder.setInverted(kMotorInvert);
-    // rightSlave2Encoder.setInverted(kMotorInvert);
-
-    //Tell code what drivetype is used
-    sparkDrive = true;
-
-    //Zero encoders
-    zeroEncoders();
-  }
-
   private void initFalconDrivetrain(){
 
     //Init motors, speed controller groups, and drivetrain
@@ -181,9 +126,6 @@ public class Drivetrain extends SubsystemBase {
     leftSlaveFalcon.setInverted(!kMotorInvert);
     rightMasterFalcon.setInverted(kMotorInvert);
     rightSlaveFalcon.setInverted(kMotorInvert);
-
-    //Tell code what drivetype is used
-    sparkDrive = false;
 
     //Zero encoders
     leftMasterFalcon.setSelectedSensorPosition(0);
@@ -225,42 +167,19 @@ public class Drivetrain extends SubsystemBase {
   //Utility functions
   public void zeroEncoders(){
 
-    if (sparkDrive) {
-
-      leftMasterEncoder.setPosition(0);
-      leftSlave1Encoder.setPosition(0);
-      leftSlave2Encoder.setPosition(0);
-      rightMasterEncoder.setPosition(0);
-      rightSlave1Encoder.setPosition(0);
-      rightSlave2Encoder.setPosition(0);
-    
-    } else {
-
-      leftMasterFalcon.setSelectedSensorPosition(0);
-      leftSlaveFalcon.setSelectedSensorPosition(0);
-      rightMasterFalcon.setSelectedSensorPosition(0);
-      rightSlaveFalcon.setSelectedSensorPosition(0);
-    
-    }
-    
+    leftMasterFalcon.setSelectedSensorPosition(0);
+    leftSlaveFalcon.setSelectedSensorPosition(0);
+    rightMasterFalcon.setSelectedSensorPosition(0);
+    rightSlaveFalcon.setSelectedSensorPosition(0);    
   }
 
   public double[] getLeftEncoders(){
 
     double[] encoders = new double[2];
 
-    if (sparkDrive) {
-
-      encoders[0] = leftMasterEncoder.getPosition();
-      encoders[1] = leftSlave1Encoder.getPosition();
-      //encoders[2] = leftSlave2Encoder.getPosition(); //Third encoder excluded to simplify future autodrive structure with falcons
-
-    } else {
-
-      encoders[0] = leftMasterFalcon.getSelectedSensorPosition();
-      encoders[1] = leftSlaveFalcon.getSelectedSensorPosition();
-    }
-
+    encoders[0] = leftMasterFalcon.getSelectedSensorPosition();
+    encoders[1] = leftSlaveFalcon.getSelectedSensorPosition();
+    
     return encoders;
   }
 
@@ -268,33 +187,20 @@ public class Drivetrain extends SubsystemBase {
 
     double[] encoders = new double[2];
 
-    if (sparkDrive) {
-
-      encoders[0] = rightMasterEncoder.getPosition();
-      encoders[1] = rightSlave1Encoder.getPosition();
-      //encoders[2] = rightSlave2Encoder.getPosition(); //Third encoder excluded to simplify future autodrive structure with falcons
-
-    } else {
-
-      encoders[0] = rightMasterFalcon.getSelectedSensorPosition();
-      encoders[1] = rightSlaveFalcon.getSelectedSensorPosition();
-    }
-
+    encoders[0] = rightMasterFalcon.getSelectedSensorPosition();
+    encoders[1] = rightSlaveFalcon.getSelectedSensorPosition();
+    
     return encoders;
   }
 
   public double getMasterLeftEncoder(){
 
-    if(sparkDrive) return leftMasterEncoder.getPosition();
-
-    else return leftMasterFalcon.getSelectedSensorPosition();
+    return leftMasterFalcon.getSelectedSensorPosition();
   }
 
   public double getMasterRightEncoder(){
 
-    if(sparkDrive) return rightMasterEncoder.getPosition();
-
-    else return rightMasterFalcon.getSelectedSensorPosition();
+    return rightMasterFalcon.getSelectedSensorPosition();
   }
 
   public double getGyroAngle(){
