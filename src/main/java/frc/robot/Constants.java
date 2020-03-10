@@ -56,6 +56,20 @@ public final class Constants {
         public static final double kWheelDiameter = 6.0;
         public static final double kLowGearSpeedCap = 1.0;//In case full speed draws excessive power, these are an emergency measure
         public static final double kHighGearSpeedCap = 1.0;
+        public static final double kAutoDriveSpeed = 0.8;
+        public static final double kAutoTurnSpeed = 0.5;
+        public static final double kLowGearRatio = 30.0;
+        public static final double kHighGearRatio = 70.0;
+        public static final double kTurnAngleTolerance = 0.001;
+
+        public static final int kFalconUnitsPerRev = 2048;
+
+        public static final double kP_Straight = 0.03;
+        public static final double kI_Straight = 0.0;
+        public static final double kD_Straight = 0.0;
+        public static final double kP_Turn = 0.06;
+        public static final double kI_Turn = 0.0;
+        public static final double kD_Turn = 0.0;
 
         public static int DIRECTION_MULTIPLIER = 1;//Controls whether forward on joysticks is forward or backward on robot
     }
@@ -67,7 +81,7 @@ public final class Constants {
         public static final double kI_Shoot = 0;
         public static final double kD_Shoot = 0;
         public static final double kF_Shoot = -1; 
-        public static final double kP_Turret = 0.0035;
+        public static final double kP_Turret = 0.005;
         public static final double kI_Turret = 0;
         public static final double kD_Turret = 0.0;
 
@@ -90,7 +104,8 @@ public final class Constants {
 
         //
         public static final double kShooterSpeed = -1.0;
-        public static final double kTurretSpeed = .1;//positive is counterclockwise
+        public static final double kTurretSpeedManual = 0.03;//positive is counterclockwise
+        public static final double kTurretSpeedAuto = 0.05;
     }
 
     public static class PneumaticsConstants {

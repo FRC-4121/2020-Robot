@@ -14,10 +14,6 @@ import static frc.robot.Constants.PneumaticsConstants.*;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -29,30 +25,17 @@ public class Drivetrain extends SubsystemBase {
 
   private ADXRS450_Gyro gyro;
 
-  private CANSparkMax leftMasterSpark;
-  private CANSparkMax leftSlave1Spark;
-  private CANSparkMax leftSlave2Spark;
-  private SpeedControllerGroup leftMotorGroup;
-
-  private CANSparkMax rightMasterSpark;
-  private CANSparkMax rightSlave1Spark;
-  private CANSparkMax rightSlave2Spark;
-  private SpeedControllerGroup rightMotorGroup;
-
   private WPI_TalonFX leftMasterFalcon;
   private WPI_TalonFX leftSlaveFalcon;
 
   private WPI_TalonFX rightMasterFalcon;
   private WPI_TalonFX rightSlaveFalcon;
 
+  private SpeedControllerGroup leftMotorGroup;
+  private SpeedControllerGroup rightMotorGroup;
+
   private DifferentialDrive drivetrain;
 
-  private CANEncoder leftMasterEncoder;
-  private CANEncoder leftSlave1Encoder;
-  private CANEncoder leftSlave2Encoder;
-  private CANEncoder rightMasterEncoder;
-  private CANEncoder rightSlave1Encoder;
-  private CANEncoder rightSlave2Encoder;
   
   public Drivetrain() {
 
@@ -68,11 +51,13 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+
+    // Put info on the dashboard
     SmartDashboard.putNumber("Gyro", getGyroAngle());
     SmartDashboard.putNumber("Left Master Encoder", getMasterLeftEncoder());
     SmartDashboard.putNumber("Right Master Encoder", getMasterRightEncoder());
 
+    // Zero the gyro on driver command
     double zeroGyro = SmartDashboard.getNumber("Zero Gyro", 0);
     if (zeroGyro == 1)
     {
@@ -80,6 +65,7 @@ public class Drivetrain extends SubsystemBase {
       zeroGyro();
     }
 
+    // Zero the encoders on driver command
     double zeroEncoders = SmartDashboard.getNumber("Zero Encoders", 0);
     if (zeroEncoders == 1)
     {
@@ -140,39 +126,67 @@ public class Drivetrain extends SubsystemBase {
 
     //Configure software-based voltage protection measure (will require testing to determine optimal values)
     double speedCap = 1.0;
-    if(GEAR.equals("High")) speedCap = kHighGearSpeedCap;
+    if(GEAR.equals("High")){
+      
+      speedCap = kHighGearSpeedCap;
 
-    else speedCap = kLowGearSpeedCap;
-
-    if(DIRECTION_MULTIPLIER == 1)
-    {
-      drivetrain.tankDrive(speedCap * DIRECTION_MULTIPLIER * leftJoyY, speedCap * DIRECTION_MULTIPLIER * rightJoyY);   
     }
-    else
-    {
+    else{
+      
+      speedCap = kLowGearSpeedCap;
+
+    }
+
+    if(DIRECTION_MULTIPLIER == 1){
+
+      drivetrain.tankDrive(speedCap * DIRECTION_MULTIPLIER * leftJoyY, speedCap * DIRECTION_MULTIPLIER * rightJoyY);   
+    
+    }
+    else{
+
       drivetrain.tankDrive(speedCap * DIRECTION_MULTIPLIER * rightJoyY, speedCap * DIRECTION_MULTIPLIER * leftJoyY); 
+    
     }
   }
 
+
+  /**
+   * Run drivetrain during autonomous
+   * @param leftSpeed
+   * @param rightSpeed
+   */
   public void autoDrive(double leftSpeed, double rightSpeed){
 
     drivetrain.tankDrive(leftSpeed, rightSpeed);
   }
 
+
+  /**
+   * Stop the drive train
+   */
   public void stopDrive(){
 
     drivetrain.tankDrive(0, 0);
   }
 
-  //Utility functions
+
+  /**
+   * Zero the encoders
+   */
   public void zeroEncoders(){
 
     leftMasterFalcon.setSelectedSensorPosition(0);
     leftSlaveFalcon.setSelectedSensorPosition(0);
     rightMasterFalcon.setSelectedSensorPosition(0);
-    rightSlaveFalcon.setSelectedSensorPosition(0);    
+    rightSlaveFalcon.setSelectedSensorPosition(0);
+
   }
 
+
+  /**
+   * Get position of all left encoders
+   * @return
+   */
   public double[] getLeftEncoders(){
 
     double[] encoders = new double[2];
@@ -181,8 +195,14 @@ public class Drivetrain extends SubsystemBase {
     encoders[1] = leftSlaveFalcon.getSelectedSensorPosition();
     
     return encoders;
+
   }
 
+
+  /**
+   * Get position of all right encoders
+   * @return
+   */
   public double[] getRightEncoders(){
 
     double[] encoders = new double[2];
@@ -191,31 +211,61 @@ public class Drivetrain extends SubsystemBase {
     encoders[1] = rightSlaveFalcon.getSelectedSensorPosition();
     
     return encoders;
+
   }
 
-  public double getMasterLeftEncoder(){
+
+  /**
+   * Get position of left master encoder
+   * @return
+   */
+  public double getMasterLeftEncoderPosition(){
 
     return leftMasterFalcon.getSelectedSensorPosition();
+
   }
 
-  public double getMasterRightEncoder(){
+
+  /**
+   * Get position of right master encoder
+   * @return
+   */
+  public double getMasterRightEncoderPosition(){
 
     return rightMasterFalcon.getSelectedSensorPosition();
+
   }
 
+
+  /**
+   * Get current gyro angle
+   * @return
+   */
   public double getGyroAngle(){
 
-    return gyro.getAngle();
+    double correctedGyro = gyro.getAngle() % 360.0;
+    return correctedGyro;
+
   }
 
+
+  /**
+   * Reset current gyro heading to zero
+   */
   public void zeroGyro(){
 
     gyro.reset();
+
   }
   
+
+  /**
+   * Invert the direction of driving
+   */
   public void invertDirection(){
 
     DIRECTION_MULTIPLIER *= -1;
+
   }
 
 }

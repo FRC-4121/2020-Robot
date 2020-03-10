@@ -13,7 +13,7 @@ import static frc.robot.Constants.ClimberConstants.*;
 import static frc.robot.Constants.ShooterConstants.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
-
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -44,6 +44,7 @@ public class RobotContainer {
   private final NetworkTableQuerier ntables = new NetworkTableQuerier();
   private final CameraController camera = new CameraController();
 
+
   //Commands
   //Driving
   private final AutoDrive autoCommand = new AutoDrive(drivetrain);
@@ -64,8 +65,8 @@ public class RobotContainer {
   private final RunProcessor invertProcessor = new RunProcessor(processor, true);
 
   //Shooter
-  private final RunTurret clockwise = new RunTurret(turret, -kTurretSpeed);
-  private final RunTurret counterclockwise = new RunTurret(turret, kTurretSpeed);
+  private final RunTurret clockwise = new RunTurret(turret, -kTurretSpeedManual);
+  private final RunTurret counterclockwise = new RunTurret(turret, kTurretSpeedManual);
   private final RunShooter shoot = new RunShooter(shooter, processor, testingJoystick);
 
   //Climber
@@ -118,6 +119,11 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
+
+    //Calibrate and reset the onboard gyro
+    rioGyro.calibrate();;
+    rioGyro.reset();
+
   }
 
   //For subsystem default commands (driving, etc.)
@@ -126,7 +132,7 @@ public class RobotContainer {
     //Drivetrain -> drive with xbox joysticks
     drivetrain.setDefaultCommand(driveCommand);
 
-    shooter.setDefaultCommand(shoot);
+    //shooter.setDefaultCommand(shoot);
 
     //turret.setDefaultCommand(autoTurret);
 
@@ -182,10 +188,18 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return autoCommand;
+
   }
 
+
+  /**
+   * Return the Auto Shoot command
+   * @return
+   */
   public Command getAutoShootCommand(){
 
     return autoShoot;
+
   }
+
 }
