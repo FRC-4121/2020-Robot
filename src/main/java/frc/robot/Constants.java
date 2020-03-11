@@ -61,13 +61,12 @@ public final class Constants {
         public static final double kLowGearRatio = 30.0;
         public static final double kHighGearRatio = 70.0;
         public static final double kTurnAngleTolerance = 0.001;
-
-        public static final int kFalconUnitsPerRev = 2048;
+        public static final double AUTO_ENCODER_REVOLUTION_FACTOR = 16435.19;
 
         public static final double kP_Straight = 0.03;
         public static final double kI_Straight = 0.0;
         public static final double kD_Straight = 0.0;
-        public static final double kP_Turn = 0.06;
+        public static final double kP_Turn = 0.020;
         public static final double kI_Turn = 0.0;
         public static final double kD_Turn = 0.0;
 
@@ -110,14 +109,15 @@ public final class Constants {
 
     public static class PneumaticsConstants {
 
-        public static final int[] LEFT_SHIFTER = {1, 4};
-        public static final int[] RIGHT_SHIFTER = {2, 5};
+        public static final int[] SHIFTER = {1, 4};
+        public static final int[] KICKSTAND_PNEU = {6, 7};
         public static final int[] INTAKE_PNEU = {0, 3};
-        public static final int[] PTO_PNEU = {6, 7};
+        public static final int[] PTO_PNEU = {2, 5};
 
         public static String GEAR = "Low";
         public static String INTAKE_STATUS = "Retracted";
         public static String PTO_STATUS = "Disengaged";
+        public static String KICKSTAND_STATUS = "Up";
     }
 
     public static class ProcessorConstants {

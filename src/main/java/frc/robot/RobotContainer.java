@@ -33,6 +33,9 @@ public class RobotContainer {
   private final Joystick launchpad = new Joystick(LAUNCHPAD_PORT);
   private final Joystick testingJoystick = new Joystick(TEST_JOYSTICK_PORT);  
 
+  
+
+
   //Subsystems
   private final Drivetrain drivetrain = new Drivetrain();
   private final Shooter shooter = new Shooter();
@@ -47,7 +50,6 @@ public class RobotContainer {
 
   //Commands
   //Driving
-  private final AutoDrive autoCommand = new AutoDrive(drivetrain);
   private final DriveWithJoysticks driveCommand = new DriveWithJoysticks(drivetrain, xbox);
   private final InvertDirection invertCommand = new InvertDirection(drivetrain, camera);
 
@@ -55,6 +57,7 @@ public class RobotContainer {
   private final Shift shift = new Shift(pneumatics);
   private final OperateArm operateIntakeArm = new OperateArm(pneumatics);
   private final OperatePTO operatePTO = new OperatePTO(pneumatics);
+  private final OperateKickstand operateKickstand = new OperateKickstand(pneumatics);
 
   //Intake
   //private final RunIntake in = new RunIntake(intake, kIntakeSpeed);
@@ -86,6 +89,7 @@ public class RobotContainer {
   private JoystickButton shiftButton = new JoystickButton(xbox, 5);
   private JoystickButton intakeArmButton = new JoystickButton(testingJoystick, 1);
   private JoystickButton PTOButton = new JoystickButton(testingJoystick, 2);
+  private JoystickButton kickstandButton = new JoystickButton(xbox, 1);
 
   //Intake
   private JoystickButton inButton = new JoystickButton(testingJoystick, 3);
@@ -120,10 +124,6 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    //Calibrate and reset the onboard gyro
-    rioGyro.calibrate();;
-    rioGyro.reset();
-
   }
 
   //For subsystem default commands (driving, etc.)
@@ -152,6 +152,7 @@ public class RobotContainer {
     shiftButton.whenPressed(shift);
     intakeArmButton.whenPressed(operateIntakeArm);
     PTOButton.whenPressed(operatePTO);
+    kickstandButton.whenPressed(operateKickstand);
     //Intake
     // inButton.whileHeld(in);
     // outButton.whileHeld(out);
@@ -187,7 +188,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return autoCommand;
+    return new AutoRaceParallel(drivetrain, pneumatics, processor);
 
   }
 

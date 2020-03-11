@@ -20,10 +20,10 @@ public class Pneumatics extends SubsystemBase {
   
   private Compressor compressor = new Compressor(0);
 
-  private DoubleSolenoid leftShifter = new DoubleSolenoid(LEFT_SHIFTER[0], LEFT_SHIFTER[1]);
-  private DoubleSolenoid rightShifter = new DoubleSolenoid(RIGHT_SHIFTER[0], RIGHT_SHIFTER[1]);
+  private DoubleSolenoid shifter = new DoubleSolenoid(SHIFTER[0], SHIFTER[1]);
   private DoubleSolenoid intakePneu = new DoubleSolenoid(INTAKE_PNEU[0], INTAKE_PNEU[1]);
   private DoubleSolenoid PTOPneu = new DoubleSolenoid(PTO_PNEU[0], PTO_PNEU[1]);
+  private DoubleSolenoid kickstandPneu = new DoubleSolenoid(KICKSTAND_PNEU[0], KICKSTAND_PNEU[1]);
 
   public Pneumatics() {
 
@@ -39,6 +39,7 @@ public class Pneumatics extends SubsystemBase {
     SmartDashboard.putString("Drive Gear", GEAR);
     SmartDashboard.putString("Intake Status", INTAKE_STATUS);
     SmartDashboard.putString("PTO Status", PTO_STATUS);
+    SmartDashboard.putString("Kickstand Status", KICKSTAND_STATUS);
   }
 
   public void extendIntake() {
@@ -55,15 +56,13 @@ public class Pneumatics extends SubsystemBase {
 
   public void shiftDown() {
 
-    leftShifter.set(Value.kForward);
-    rightShifter.set(Value.kForward);//will require testing
+    shifter.set(Value.kReverse);//will require testing
     GEAR = "Low";
   }
 
   public void shiftUp() {
 
-    leftShifter.set(Value.kReverse);
-    rightShifter.set(Value.kReverse);
+    shifter.set(Value.kForward);
     GEAR = "High";
   }
 
@@ -78,5 +77,16 @@ public class Pneumatics extends SubsystemBase {
     PTOPneu.set(Value.kReverse);
     PTO_STATUS = "Disengaged";
   }
+
+  public void deployKickstand(){
+
+    kickstandPneu.set(Value.kReverse);
+    KICKSTAND_STATUS = "Down";
+  }
   
+  public void retractKickstand(){
+
+    kickstandPneu.set(Value.kForward);
+    KICKSTAND_STATUS = "Up";
+  }
 }

@@ -43,6 +43,7 @@ public class Drivetrain extends SubsystemBase {
 
     gyro = new ADXRS450_Gyro();
     SmartDashboard.putNumber("Zero Gyro", 0);
+    gyro.calibrate();
     zeroGyro();
 
     SmartDashboard.putNumber("Zero Encoders", 0);
@@ -54,8 +55,8 @@ public class Drivetrain extends SubsystemBase {
 
     // Put info on the dashboard
     SmartDashboard.putNumber("Gyro", getGyroAngle());
-    SmartDashboard.putNumber("Left Master Encoder", getMasterLeftEncoder());
-    SmartDashboard.putNumber("Right Master Encoder", getMasterRightEncoder());
+    SmartDashboard.putNumber("Left Master Encoder", getMasterLeftEncoderPosition());
+    SmartDashboard.putNumber("Right Master Encoder", getMasterRightEncoderPosition());
 
     // Zero the gyro on driver command
     double zeroGyro = SmartDashboard.getNumber("Zero Gyro", 0);
