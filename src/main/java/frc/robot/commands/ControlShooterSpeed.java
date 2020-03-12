@@ -16,7 +16,7 @@ import frc.robot.subsystems.Shooter;
 
 import static frc.robot.Constants.ShooterConstants.*;
 
-public class AutoShooter extends CommandBase {
+public class ControlShooterSpeed extends CommandBase {
   
   private Shooter shooter;
   private NetworkTableQuerier ntQuerier;
@@ -35,11 +35,11 @@ public class AutoShooter extends CommandBase {
 
   private double[] ballisticsData;
   
-  public AutoShooter(Shooter shoot, NetworkTableQuerier querier) {
+  public ControlShooterSpeed(Shooter shoot, NetworkTableQuerier querier) {
 
     shooter = shoot;
     ntQuerier = querier;
-    ballistics = new Ballistics(98.25, 22.5, 8, 6380, 6, .227);
+    ballistics = new Ballistics(98.25, 22.5, 5, 6380, 6, .227);
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shoot);
@@ -50,7 +50,7 @@ public class AutoShooter extends CommandBase {
   public void initialize() {
 
     myPID = new PIDControl(kP_Shoot, kI_Shoot, kD_Shoot);
-    speed = .5;
+    speed = .75;
     speedCorrection = 0;
 
     targetSpeed = 1.0;

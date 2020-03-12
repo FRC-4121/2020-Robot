@@ -16,7 +16,7 @@ import frc.robot.subsystems.NetworkTableQuerier;
 import frc.robot.extraClasses.PIDControl;
 
 
-public class AutoTurret extends CommandBase {
+public class AimTurret extends CommandBase {
 
   //Declare class variables
   private Turret myTurret;
@@ -36,9 +36,9 @@ public class AutoTurret extends CommandBase {
 
 
   /**
-   * Creates a new AutoTurret.
+   * Creates a new AimTurret.
    */
-  public AutoTurret(Turret turret, NetworkTableQuerier ntquerier) {
+  public AimTurret(Turret turret, NetworkTableQuerier ntquerier) {
 
     // Assign variables
     myTurret = turret;
@@ -62,7 +62,7 @@ public class AutoTurret extends CommandBase {
     turretCorrection = 0;
 
     // Initialize PID
-    myPID = new PIDControl(kP_TurretLock, kI_TurretLock, kD_TurretLock);
+    myPID = new PIDControl(kP_Turret, kI_Turret, kD_Turret);
 
   }
 
@@ -101,7 +101,7 @@ public class AutoTurret extends CommandBase {
         if (!targetLock){
 
           //If the turret is in a safe operating range for the physical constraints of the robot
-          speed = -kTurretSpeedLock * myPID.run(targetOffset, 0.0);
+          speed = -kTurretSpeedAuto * myPID.run(targetOffset, 0.0);
 
           if(speed > 0){
             if(turretAngle <= kTurretMinAngle){

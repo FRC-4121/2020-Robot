@@ -77,8 +77,8 @@ public class RobotContainer {
   private final RunHook lowerHook = new RunHook(climber, -kHookSpeed);
 
   //Auto
-  private final AutoTurret autoTurret = new AutoTurret(turret, ntables);
-  private final AutoShooter autoShoot = new AutoShooter(shooter, ntables);
+  private final AimTurret aimTurret = new AimTurret(turret, ntables);
+  private final ControlShooterSpeed autoShoot = new ControlShooterSpeed(shooter, ntables);
   
 
   //Buttons
@@ -134,7 +134,7 @@ public class RobotContainer {
 
     //shooter.setDefaultCommand(shoot);
 
-    //turret.setDefaultCommand(autoTurret);
+    //turret.setDefaultCommand(aimTurret);
 
   }
 
@@ -171,7 +171,7 @@ public class RobotContainer {
     counterclockTurretButton.whenReleased(new InstantCommand(turret::stopTurret, turret));
     shootButton.whileHeld(new InstantCommand(processor::unlockProcessor, processor));
     shootButton.whenReleased(new InstantCommand(processor::stopProcessor, processor));
-    testAutoTurret.whenPressed(autoTurret);
+    testAutoTurret.whenPressed(aimTurret);
 
     //Climber
     raiseHookButton.whileHeld(new InstantCommand(climber::runHook, climber));

@@ -66,10 +66,36 @@ public class AutoTurnTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    angleCorrection = pidControl.run(myTurret.getTurretAngle(), targetAngle);
+    double turretAngle = myTurret.getTurretAngle();
+    angleCorrection = pidControl.run(turretAngle, targetAngle);
 		speed = -kTurretSpeedAuto * angleCorrection;
-		myTurret.rotateTurret(speed); 
+    
+    if(speed > 0){
+      if(turretAngle <= kTurretMinAngle){
+        myTurret.rotateTurret(speed);
+      }
+      else if(turretAngle < kTurretMaxAngle)
+      {
+        myTurret.rotateTurret(speed);
+      }
+      else
+      {
+        myTurret.stopTurret();
+      }
+    }
+    else if (speed < 0)
+    {
+      if(turretAngle >= kTurretMaxAngle){
+        myTurret.rotateTurret(speed);
+      }
+      else if(turretAngle > kTurretMinAngle){
+        myTurret.rotateTurret(speed);
+      }
+      else
+      {
+        myTurret.stopTurret();
+      }
+    }
 
   }
 
