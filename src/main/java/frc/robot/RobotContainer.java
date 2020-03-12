@@ -188,8 +188,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new AutoRaceParallel(drivetrain, pneumatics, processor);
-
+    return new AutoTestParallel1(drivetrain, pneumatics, turret, processor, shooter, ntables);
   }
 
 

@@ -56,7 +56,7 @@ public final class Constants {
         public static final double kWheelDiameter = 6.0;
         public static final double kLowGearSpeedCap = 1.0;//In case full speed draws excessive power, these are an emergency measure
         public static final double kHighGearSpeedCap = 1.0;
-        public static final double kAutoDriveSpeed = 0.8;
+        public static final double kAutoDriveSpeed = 0.6;//.8;
         public static final double kAutoTurnSpeed = 0.5;
         public static final double kLowGearRatio = 30.0;
         public static final double kHighGearRatio = 70.0;
@@ -80,9 +80,14 @@ public final class Constants {
         public static final double kI_Shoot = 0;
         public static final double kD_Shoot = 0;
         public static final double kF_Shoot = -1; 
-        public static final double kP_Turret = 0.005;
+        public static final double kP_Turret = 0.025;
         public static final double kI_Turret = 0;
         public static final double kD_Turret = 0.0;
+        public static final double kP_TurretLock = 0.0087;
+        public static final double kI_TurretLock = 0;
+        public static final double kD_TurretLock = 0.0002;
+
+        public static final double kTurretAngleTolerance = 1.0;
 
         public static final double kSpeedCorrectionFactor = 1.02;
 
@@ -104,7 +109,8 @@ public final class Constants {
         //
         public static final double kShooterSpeed = -1.0;
         public static final double kTurretSpeedManual = 0.03;//positive is counterclockwise
-        public static final double kTurretSpeedAuto = 0.05;
+        public static final double kTurretSpeedAuto = 0.2;
+        public static final double kTurretSpeedLock = 0.08;
     }
 
     public static class PneumaticsConstants {
@@ -126,7 +132,7 @@ public final class Constants {
         public static final double kIntakeSpeed = -.55;
         public static final double kOuttakeSpeed = .75;
         public static final double kProcessorSpeed = -0.3;
-        public static final double kUnlockSpeed = 0.75;
+        public static final double kUnlockSpeed = 0.9;
         public static final double kLockSpeed = -.20;
     }
 

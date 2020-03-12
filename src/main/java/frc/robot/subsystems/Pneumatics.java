@@ -68,13 +68,13 @@ public class Pneumatics extends SubsystemBase {
 
   public void engagePTO() {
 
-    PTOPneu.set(Value.kForward);
+    PTOPneu.set(Value.kReverse);
     PTO_STATUS = "Engaged";
   }
 
   public void disengagePTO(){
 
-    PTOPneu.set(Value.kReverse);
+    PTOPneu.set(Value.kForward);
     PTO_STATUS = "Disengaged";
   }
 

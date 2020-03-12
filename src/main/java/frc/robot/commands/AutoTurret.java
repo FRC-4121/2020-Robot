@@ -62,7 +62,7 @@ public class AutoTurret extends CommandBase {
     turretCorrection = 0;
 
     // Initialize PID
-    myPID = new PIDControl(kP_Turret, kI_Turret, kD_Turret);
+    myPID = new PIDControl(kP_TurretLock, kI_TurretLock, kD_TurretLock);
 
   }
 
@@ -101,7 +101,7 @@ public class AutoTurret extends CommandBase {
         if (!targetLock){
 
           //If the turret is in a safe operating range for the physical constraints of the robot
-          speed = -kTurretSpeedAuto * myPID.run(targetOffset, 0.0);
+          speed = -kTurretSpeedLock * myPID.run(targetOffset, 0.0);
 
           if(speed > 0){
             if(turretAngle <= kTurretMinAngle){

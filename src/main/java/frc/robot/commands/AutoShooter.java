@@ -39,7 +39,7 @@ public class AutoShooter extends CommandBase {
 
     shooter = shoot;
     ntQuerier = querier;
-    ballistics = new Ballistics(98.25, 22.5, 5, 6380, 6, .227);
+    ballistics = new Ballistics(98.25, 22.5, 8, 6380, 6, .227);
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shoot);
@@ -50,7 +50,7 @@ public class AutoShooter extends CommandBase {
   public void initialize() {
 
     myPID = new PIDControl(kP_Shoot, kI_Shoot, kD_Shoot);
-    speed = .75;
+    speed = .5;
     speedCorrection = 0;
 
     targetSpeed = 1.0;
