@@ -98,8 +98,8 @@ public class Robot extends TimedRobot {
       autonomousCommand.cancel();
     }
 
-    autoShootCommand = robotContainer.getAutoShootCommand();
-    autoShootCommand.schedule();
+    // autoShootCommand = robotContainer.getAutoShootCommand();
+    // autoShootCommand.schedule();
     
   }
 

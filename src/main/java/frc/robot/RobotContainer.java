@@ -83,34 +83,34 @@ public class RobotContainer {
 
   //Buttons
   //Driving
-  private JoystickButton invertDirectionButton = new JoystickButton(xbox, 6);
+  private final JoystickButton invertDirectionButton = new JoystickButton(xbox, 6);
 
-  //Pneumatics
-  private JoystickButton shiftButton = new JoystickButton(xbox, 5);
-  private JoystickButton intakeArmButton = new JoystickButton(testingJoystick, 1);
-  private JoystickButton PTOButton = new JoystickButton(testingJoystick, 2);
-  private JoystickButton kickstandButton = new JoystickButton(xbox, 1);
+  // Pneumatics
+  private final JoystickButton shiftButton = new JoystickButton(xbox, 5);
+  private final JoystickButton intakeArmButton = new JoystickButton(testingJoystick, 1);
+  private final JoystickButton PTOButton = new JoystickButton(testingJoystick, 2);
+  private final JoystickButton kickstandButton = new JoystickButton(xbox, 1);
 
-  //Intake
-  private JoystickButton inButton = new JoystickButton(testingJoystick, 3);
-  private JoystickButton outButton = new JoystickButton(testingJoystick, 4);
+  // Intake
+  private final JoystickButton inButton = new JoystickButton(testingJoystick, 3);
+  private final JoystickButton outButton = new JoystickButton(testingJoystick, 4);
 
-  //Processor
-  private JoystickButton runProcButton = new JoystickButton(testingJoystick, 5);
-  private JoystickButton invertProcessorButton = new JoystickButton(testingJoystick, 6);
+  // Processor
+  private final JoystickButton runProcButton = new JoystickButton(testingJoystick, 5);
+  private final JoystickButton invertProcessorButton = new JoystickButton(testingJoystick, 6);
   private JoystickButton processorButton;
   private JoystickButton intakeButton;
   private JoystickButton stopProcessorButton;
 
-  //Shooter
-  private JoystickButton clockwiseTurretButton = new JoystickButton(testingJoystick, 9);
-  private JoystickButton counterclockTurretButton = new JoystickButton(testingJoystick, 10);
-  private JoystickButton shootButton = new JoystickButton(testingJoystick, 11);
-  private JoystickButton testAutoTurret = new JoystickButton(testingJoystick, 12);
+  // Shooter
+  private final JoystickButton clockwiseTurretButton = new JoystickButton(testingJoystick, 9);
+  private final JoystickButton counterclockTurretButton = new JoystickButton(testingJoystick, 10);
+  private final JoystickButton shootButton = new JoystickButton(testingJoystick, 11);
+  private final JoystickButton testAutoTurret = new JoystickButton(testingJoystick, 12);
 
-  //Climber
-  private JoystickButton raiseHookButton = new JoystickButton(testingJoystick, 7);
-  private JoystickButton lowerHookButton = new JoystickButton(testingJoystick, 8);
+  // Climber
+  private final JoystickButton raiseHookButton = new JoystickButton(testingJoystick, 7);
+  private final JoystickButton lowerHookButton = new JoystickButton(testingJoystick, 8);
 
 
   /**
@@ -132,7 +132,7 @@ public class RobotContainer {
     //Drivetrain -> drive with xbox joysticks
     drivetrain.setDefaultCommand(driveCommand);
 
-    //shooter.setDefaultCommand(shoot);
+    shooter.setDefaultCommand(shoot);
 
     //turret.setDefaultCommand(aimTurret);
 
@@ -171,13 +171,13 @@ public class RobotContainer {
     counterclockTurretButton.whenReleased(new InstantCommand(turret::stopTurret, turret));
     shootButton.whileHeld(new InstantCommand(processor::unlockProcessor, processor));
     shootButton.whenReleased(new InstantCommand(processor::stopProcessor, processor));
-    testAutoTurret.whenPressed(aimTurret);
+    // testAutoTurret.whenPressed(aimTurret);
 
     //Climber
-    raiseHookButton.whileHeld(new InstantCommand(climber::runHook, climber));
-    lowerHookButton.whileHeld(new InstantCommand(climber::downHook, climber));
-    raiseHookButton.whenReleased(new InstantCommand(climber::stopHook, climber));
-    lowerHookButton.whenReleased(new InstantCommand(climber::stopHook, climber));
+    // raiseHookButton.whileHeld(new InstantCommand(climber::runHook, climber));
+    // lowerHookButton.whileHeld(new InstantCommand(climber::downHook, climber));
+    // raiseHookButton.whenReleased(new InstantCommand(climber::stopHook, climber));
+    // lowerHookButton.whenReleased(new InstantCommand(climber::stopHook, climber));
 
   }
 
