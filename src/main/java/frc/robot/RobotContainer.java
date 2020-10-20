@@ -34,8 +34,6 @@ public class RobotContainer {
   private final Joystick testingJoystick = new Joystick(TEST_JOYSTICK_PORT);  
 
   
-
-
   //Subsystems
   private final Drivetrain drivetrain = new Drivetrain();
   private final Shooter shooter = new Shooter();

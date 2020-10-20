@@ -127,7 +127,7 @@ public class Drivetrain extends SubsystemBase {
 
     //Configure software-based voltage protection measure (will require testing to determine optimal values)
     double speedCap = 1.0;
-    if(GEAR.equals("High")){
+    if(GEAR.equals("High")){// 
       
       speedCap = kHighGearSpeedCap;
 
