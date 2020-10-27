@@ -38,7 +38,7 @@ public class NetworkTableQuerier implements Runnable {
         initNetworkTables();
 
         // Set flags
-        runNetworkTables = true;
+        runNetworkTables = true; 
 
     }
     
